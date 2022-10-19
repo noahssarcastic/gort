@@ -1,4 +1,6 @@
-run_module=github.com/noahssarcastic/tddraytracer/cmd/run
+run_module = github.com/noahssarcastic/tddraytracer/cmd/run
+
+test_modules = ./tuple
 
 default: build
 
@@ -9,3 +11,9 @@ run:
 .PHONY: build
 build:
 	@go build -o ./build/tddraytracer $(run_module)
+
+.PHONY: test
+test:
+	@for mod in $(test_modules); do \
+		go test -v $$mod; \
+	done
