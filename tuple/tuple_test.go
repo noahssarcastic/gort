@@ -129,7 +129,9 @@ func TestMagnitude(t *testing.T) {
 		want float64
 	}{
 		{Vector(1, 0, 0), 1},
-		{Vector(4, 8, 8), 12},
+		{Vector(0, 1, 0), 1},
+		{Vector(0, 0, 1), 1},
+		{Vector(-4, -8, -8), 12},
 	}
 
 	for _, tt := range tests {
@@ -164,13 +166,42 @@ func TestNormalize(t *testing.T) {
 }
 
 func TestMagnitudeOfUnitVector(t *testing.T) {
-
+	vec := Vector(1, 2, 3)
+	unitVec := Normalize(vec)
+	want := 1.
+	got := Magnitude(unitVec)
+	if !FloatEqual(want, got) {
+		t.Errorf("Magnitude(Normalize(Vector(1, 2, 3))) = %v; want %v", got, want)
+	}
 }
 
 func TestDotProduct(t *testing.T) {
-
+	v1 := Vector(1, 2, 3)
+	v2 := Vector(2, 3, 4)
+	want := 20.
+	got := Dot(v1, v2)
+	if !FloatEqual(want, got) {
+		t.Errorf("Magnitude(Normalize(Vector(1, 2, 3))) = %v; want %v", got, want)
+	}
 }
 
 func TestCrossProduct(t *testing.T) {
+	var tests = []struct {
+		t1, t2 Tuple
+		want   Tuple
+	}{
+		{Vector(1, 0, 0), Vector(0, 1, 0), Vector(0, 0, 1)},
+		{Vector(0, 1, 0), Vector(1, 0, 0), Vector(0, 0, -1)},
+		{Vector(1, 2, 3), Vector(2, 3, 4), Vector(-1, 2, -1)},
+	}
 
+	for _, tt := range tests {
+		name := fmt.Sprintf("%v,%v", tt.t1, tt.t2)
+		t.Run(name, func(t *testing.T) {
+			ans := Cross(tt.t1, tt.t2)
+			if !Equal(tt.want, ans) {
+				t.Errorf("got %v, want %v", ans, tt.want)
+			}
+		})
+	}
 }
