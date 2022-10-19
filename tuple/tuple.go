@@ -8,6 +8,22 @@ type Tuple struct {
 	x, y, z, w float64
 }
 
+func (t Tuple) X() float64 {
+	return t.x
+}
+
+func (t Tuple) Y() float64 {
+	return t.y
+}
+
+func (t Tuple) Z() float64 {
+	return t.z
+}
+
+func (t Tuple) W() float64 {
+	return t.w
+}
+
 func FloatEqual(a, b float64) bool {
 	return math.Abs(a-b) < EPSILON
 }
