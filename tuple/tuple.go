@@ -1,8 +1,10 @@
 package tuple
 
-import "math"
+import (
+	"math"
 
-const EPSILON float64 = 0.00001
+	"github.com/noahssarcastic/tddraytracer/utils"
+)
 
 type Tuple struct {
 	x, y, z, w float64
@@ -24,15 +26,11 @@ func (t Tuple) W() float64 {
 	return t.w
 }
 
-func FloatEqual(a, b float64) bool {
-	return math.Abs(a-b) < EPSILON
-}
-
 func Equal(a, b Tuple) bool {
-	return FloatEqual(a.x, b.x) &&
-		FloatEqual(a.y, b.y) &&
-		FloatEqual(a.z, b.z) &&
-		FloatEqual(a.w, b.w)
+	return utils.FloatEqual(a.x, b.x) &&
+		utils.FloatEqual(a.y, b.y) &&
+		utils.FloatEqual(a.z, b.z) &&
+		utils.FloatEqual(a.w, b.w)
 }
 
 func Point(x, y, z float64) Tuple {
@@ -45,7 +43,7 @@ func Point(x, y, z float64) Tuple {
 }
 
 func (t Tuple) IsPoint() bool {
-	return FloatEqual(t.w, 1)
+	return utils.FloatEqual(t.w, 1)
 }
 
 func Vector(x, y, z float64) Tuple {
@@ -58,7 +56,7 @@ func Vector(x, y, z float64) Tuple {
 }
 
 func (t Tuple) IsVector() bool {
-	return FloatEqual(t.w, 0)
+	return utils.FloatEqual(t.w, 0)
 }
 
 func (a Tuple) Add(b Tuple) Tuple {

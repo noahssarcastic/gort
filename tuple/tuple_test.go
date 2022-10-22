@@ -3,6 +3,8 @@ package tuple
 import (
 	"fmt"
 	"testing"
+
+	"github.com/noahssarcastic/tddraytracer/utils"
 )
 
 func TestEqual(t *testing.T) {
@@ -170,7 +172,7 @@ func TestMagnitudeOfUnitVector(t *testing.T) {
 	unitVec := Normalize(vec)
 	want := 1.
 	got := Magnitude(unitVec)
-	if !FloatEqual(want, got) {
+	if !utils.FloatEqual(want, got) {
 		t.Errorf("Magnitude(Normalize(Vector(1, 2, 3))) = %v; want %v", got, want)
 	}
 }
@@ -180,7 +182,7 @@ func TestDotProduct(t *testing.T) {
 	v2 := Vector(2, 3, 4)
 	want := 20.
 	got := Dot(v1, v2)
-	if !FloatEqual(want, got) {
+	if !utils.FloatEqual(want, got) {
 		t.Errorf("Magnitude(Normalize(Vector(1, 2, 3))) = %v; want %v", got, want)
 	}
 }

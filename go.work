@@ -4,4 +4,6 @@ use (
 	./cmd/run
 	./cmd/tupletest
 	./tuple
+	./utils
+	./color
 )
