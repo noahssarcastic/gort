@@ -1,9 +1,10 @@
 go 1.19
 
 use (
+	./canvas
 	./cmd/run
 	./cmd/tupletest
+	./color
 	./tuple
 	./utils
-	./color
 )

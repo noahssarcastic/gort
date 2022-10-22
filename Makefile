@@ -1,6 +1,6 @@
 run_module = github.com/noahssarcastic/tddraytracer/cmd/run
 
-test_modules = ./tuple ./color
+test_modules = ./tuple ./color ./canvas
 
 default: build
 

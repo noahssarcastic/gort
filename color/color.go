@@ -43,3 +43,7 @@ func PiecewiseMultiply(c1 Color, c2 Color) Color {
 		g: c1.g * c2.g,
 	}
 }
+
+func White() Color {
+	return Color{0, 0, 0}
+}
