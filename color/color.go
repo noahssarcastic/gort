@@ -47,3 +47,7 @@ func PiecewiseMultiply(c1 Color, c2 Color) Color {
 func White() Color {
 	return Color{0, 0, 0}
 }
+
+func Red() Color {
+	return Color{1, 0, 0}
+}

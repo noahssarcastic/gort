@@ -26,3 +26,7 @@ func (canv *Canvas) Height() int {
 func (canv *Canvas) GetPixel(x, y int) color.Color {
 	return canv.pixels[x+y*canv.w]
 }
+
+func (canv *Canvas) SetPixel(x, y int, c color.Color) {
+	canv.pixels[x+y*canv.w] = c
+}
