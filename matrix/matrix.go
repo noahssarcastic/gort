@@ -1,6 +1,6 @@
 package matrix
 
-import "fmt"
+import "strconv"
 
 type Matrix [][]float64
 
@@ -16,26 +16,22 @@ func (mat Matrix) String() string {
 	s := make([]byte, 0)
 	s = append(s, '[')
 	for y, row := range mat {
-		if y == 0 {
-			s = append(s, '[')
-		} else {
-			s = append(s, " ["...)
+		if y != 0 {
+			s = append(s, ' ')
 		}
-
+		s = append(s, '[')
 		for x, el := range row {
 			if x != 0 {
 				s = append(s, ' ')
 			}
-			s = append(s, []byte(fmt.Sprintf("%f", el))...)
+			s = append(s, []byte(strconv.FormatFloat(el, 'f', -1, 64))...)
 		}
-
+		s = append(s, ']')
 		if y < len(mat)-1 {
-			s = append(s, "]\n"...)
-		} else {
-			s = append(s, "]"...)
+			s = append(s, '\n')
 		}
 	}
-	s = append(s, "]"...)
+	s = append(s, ']')
 	return string(s)
 }
 
