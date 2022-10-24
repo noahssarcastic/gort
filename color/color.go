@@ -6,6 +6,10 @@ type Color struct {
 	r, g, b float64
 }
 
+func New(r, g, b float64) Color {
+	return Color{r, g, b}
+}
+
 func (c Color) R() float64 {
 	return c.r
 }

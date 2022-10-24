@@ -7,10 +7,15 @@ import (
 )
 
 func main() {
-	canv := canvas.New(10, 2)
+	canv := canvas.New(20, 20)
 	for y := 0; y < canv.Height(); y++ {
 		for x := 0; x < canv.Width(); x++ {
-			canv.SetPixel(x, y, color.Red())
+			canv.SetPixel(
+				x, y,
+				color.New(
+					float64(x)/float64(canv.Width()),
+					float64(y)/float64(canv.Height()),
+					0))
 		}
 	}
 	ppm.CanvasToPixmap(canv).WritePPM()

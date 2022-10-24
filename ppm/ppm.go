@@ -3,6 +3,7 @@ package ppm
 import (
 	"fmt"
 	"os"
+	"strconv"
 
 	"github.com/noahssarcastic/tddraytracer/canvas"
 	"github.com/noahssarcastic/tddraytracer/color"
@@ -72,6 +73,26 @@ func (pm Pixmap) getHeader() string {
 		MAX_COLOR)
 }
 
+func insertString(line []byte, s string) []byte {
+	if len(line) == 0 {
+		return append(line, []byte(s)...)
+	}
+
+	// check if enough room to add string
+	if len(line)+len(s) >= cap(line) {
+		// scale up array and copy
+		newSlice := make([]byte, cap(line)+70)[0:0]
+		line = append(newSlice, line...)
+
+		// start new line
+		line = append(line, '\n')
+	} else {
+		// add padding
+		line = append(line, ' ')
+	}
+	return append(line, []byte(s)...)
+}
+
 func (pm Pixmap) WritePPM() {
 	f, err := os.Create("pixmap.ppm")
 	check(err)
@@ -81,17 +102,13 @@ func (pm Pixmap) WritePPM() {
 	check(err)
 
 	for _, row := range pm.pixels {
-		for i, pixel := range row {
-			if i != 0 {
-				_, err = f.WriteString(" ")
-				check(err)
-			}
-			_, err = f.WriteString(fmt.Sprintf("%v %v %v", pixel.r, pixel.g, pixel.b))
-			check(err)
+		line := make([]byte, 70)[0:0]
+		for _, pixel := range row {
+			line = insertString(line, strconv.Itoa(pixel.r))
+			line = insertString(line, strconv.Itoa(pixel.g))
+			line = insertString(line, strconv.Itoa(pixel.b))
 		}
-		_, err = f.WriteString("\n")
+		_, err = f.Write(append(line, '\n'))
 		check(err)
 	}
-	// _, err = f.WriteString("\n")
-	// check(err)
 }
