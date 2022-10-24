@@ -3,8 +3,10 @@ go 1.19
 use (
 	./canvas
 	./cmd/run
+	./cmd/testppm
 	./cmd/tupletest
 	./color
+	./ppm
 	./tuple
 	./utils
 )

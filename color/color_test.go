@@ -65,3 +65,22 @@ func TestPiecewiseMultiplyColors(t *testing.T) {
 		t.Errorf("want %v; got %v", want, got)
 	}
 }
+
+func TestClampColor(t *testing.T) {
+	var tests = []struct {
+		c    Color
+		want Color
+	}{
+		{Color{0.5, 1.3, 0}, Color{0.5, 1, 0}},
+		{Color{0.5, 0.9, -5}, Color{0.5, 0.9, 0}},
+	}
+	for _, tt := range tests {
+		name := fmt.Sprintf("%v", tt.c)
+		t.Run(name, func(t *testing.T) {
+			ans := tt.c.Clamp()
+			if !Equal(ans, tt.want) {
+				t.Errorf("got %v, want %v", ans, tt.want)
+			}
+		})
+	}
+}
