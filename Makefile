@@ -1,6 +1,6 @@
 run_module = github.com/noahssarcastic/tddraytracer/cmd/run
 
-test_modules = ./tuple ./color ./canvas
+test_modules = ./canvas ./color ./matrix ./tuple
 
 default: build
 
@@ -15,5 +15,5 @@ build:
 .PHONY: test
 test:
 	@for mod in $(test_modules); do \
-		go test -v $$mod; \
+		go test $$mod; \
 	done
