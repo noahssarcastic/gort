@@ -73,19 +73,19 @@ func (pm Pixmap) getHeader() string {
 		MAX_COLOR)
 }
 
-func insertString(line []byte, s string) []byte {
+func insertString(line []byte, s string, f *os.File) []byte {
+	// fmt.Printf("len:%v; cap:%v; str: %v\n\n", len(line), cap(line), s)
+
 	if len(line) == 0 {
 		return append(line, []byte(s)...)
 	}
 
 	// check if enough room to add string
 	if len(line)+len(s) >= cap(line) {
-		// scale up array and copy
-		newSlice := make([]byte, cap(line)+70)[0:0]
-		line = append(newSlice, line...)
-
-		// start new line
-		line = append(line, '\n')
+		// write line and start new buffer
+		_, err := f.Write(append(line, '\n'))
+		check(err)
+		line = make([]byte, 70)[0:0]
 	} else {
 		// add padding
 		line = append(line, ' ')
@@ -104,9 +104,9 @@ func (pm Pixmap) WritePPM() {
 	for _, row := range pm.pixels {
 		line := make([]byte, 70)[0:0]
 		for _, pixel := range row {
-			line = insertString(line, strconv.Itoa(pixel.r))
-			line = insertString(line, strconv.Itoa(pixel.g))
-			line = insertString(line, strconv.Itoa(pixel.b))
+			line = insertString(line, strconv.Itoa(pixel.r), f)
+			line = insertString(line, strconv.Itoa(pixel.g), f)
+			line = insertString(line, strconv.Itoa(pixel.b), f)
 		}
 		_, err = f.Write(append(line, '\n'))
 		check(err)
