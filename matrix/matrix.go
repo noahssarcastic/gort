@@ -1,6 +1,10 @@
 package matrix
 
-import "strconv"
+import (
+	"strconv"
+
+	"github.com/noahssarcastic/tddraytracer/utils"
+)
 
 type Matrix [][]float64
 
@@ -43,6 +47,32 @@ func (mat Matrix) Height() int {
 	return len(mat)
 }
 
-func (mat Matrix) Get(x, y int) float64 {
-	return mat[x][y]
+func (mat Matrix) Get(r, c int) float64 {
+	return mat[c][r]
+}
+
+func (mat Matrix) IsMatrix() bool {
+	rows := len(mat)
+	cols := len(mat[0])
+	for y := 1; y < rows; y++ {
+		if len(mat[y]) != cols {
+			return false
+		}
+	}
+	return true
+}
+
+func Equal(a, b Matrix) bool {
+	if !(a.Width() == b.Width()) || !(a.Height() == b.Height()) {
+		return false
+	}
+
+	for y := 0; y < a.Height(); y++ {
+		for x := 0; x < a.Width(); x++ {
+			if !utils.FloatEqual(a.Get(y, x), b.Get(y, x)) {
+				return false
+			}
+		}
+	}
+	return true
 }
