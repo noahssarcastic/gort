@@ -16,3 +16,6 @@
 
 # Executables
 build/
+
+# Images
+*.ppm
