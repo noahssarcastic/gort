@@ -33,6 +33,15 @@ func Equal(a, b Tuple) bool {
 		utils.FloatEqual(a.w, b.w)
 }
 
+func New(x, y, z, w float64) Tuple {
+	return Tuple{
+		x: x,
+		y: y,
+		z: z,
+		w: w,
+	}
+}
+
 func Point(x, y, z float64) Tuple {
 	return Tuple{
 		x: x,

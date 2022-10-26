@@ -1,8 +1,10 @@
 package matrix
 
 import (
+	"fmt"
 	"strconv"
 
+	"github.com/noahssarcastic/tddraytracer/tuple"
 	"github.com/noahssarcastic/tddraytracer/utils"
 )
 
@@ -14,6 +16,15 @@ func New(w, h int) Matrix {
 		mat[i] = make([]float64, w)
 	}
 	return mat
+}
+
+func FromTuple(t tuple.Tuple) Matrix {
+	return Matrix{
+		{t.X()},
+		{t.Y()},
+		{t.Z()},
+		{t.W()},
+	}
 }
 
 func (mat Matrix) String() string {
@@ -48,7 +59,7 @@ func (mat Matrix) Height() int {
 }
 
 func (mat Matrix) Get(r, c int) float64 {
-	return mat[c][r]
+	return mat[r][c]
 }
 
 func (mat Matrix) IsMatrix() bool {
@@ -75,4 +86,38 @@ func Equal(a, b Matrix) bool {
 		}
 	}
 	return true
+}
+
+func Multiply(a, b Matrix) Matrix {
+	if a.Width() != b.Height() {
+		panic(fmt.Sprintf("cannot multiply %v and %v; invalid dimensions", a, b))
+	}
+
+	w := b.Width()
+	h := a.Height()
+	newMat := New(w, h)
+	for y, row := range newMat {
+		for x := range row {
+			for i := 0; i < a.Width(); i++ {
+				row[x] += a.Get(y, i) * b.Get(i, x)
+			}
+		}
+	}
+	return newMat
+}
+
+func (mat Matrix) Multiply(t tuple.Tuple) tuple.Tuple {
+	colVector := Matrix{
+		{t.X()},
+		{t.Y()},
+		{t.Z()},
+		{t.W()},
+	}
+	ret := Multiply(mat, colVector)
+	return tuple.New(
+		ret.Get(0, 0),
+		ret.Get(1, 0),
+		ret.Get(2, 0),
+		ret.Get(3, 0),
+	)
 }
