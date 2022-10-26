@@ -62,6 +62,10 @@ func (mat Matrix) Get(r, c int) float64 {
 	return mat[r][c]
 }
 
+func (mat Matrix) Set(r, c int, val float64) {
+	mat[r][c] = val
+}
+
 func (mat Matrix) IsMatrix() bool {
 	rows := len(mat)
 	cols := len(mat[0])
@@ -120,4 +124,22 @@ func (mat Matrix) Multiply(t tuple.Tuple) tuple.Tuple {
 		ret.Get(2, 0),
 		ret.Get(3, 0),
 	)
+}
+
+func I(dim int) Matrix {
+	mat := New(dim, dim)
+	for i := 0; i < dim; i++ {
+		mat.Set(i, i, 1)
+	}
+	return mat
+}
+
+func (mat Matrix) T() Matrix {
+	trans := New(mat.Height(), mat.Width())
+	for y, row := range mat {
+		for x, el := range row {
+			trans.Set(x, y, el)
+		}
+	}
+	return trans
 }

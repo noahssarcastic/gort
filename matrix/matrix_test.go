@@ -156,6 +156,26 @@ func TestMultiply_square(t *testing.T) {
 	}
 }
 
+func TestMultiply_identity(t *testing.T) {
+	mat := Matrix{
+		{1, 2, 3, 4},
+		{5, 6, 7, 8},
+		{9, 8, 7, 6},
+		{5, 4, 3, 2},
+	}
+	id := I(4)
+	want := Matrix{
+		{1, 2, 3, 4},
+		{5, 6, 7, 8},
+		{9, 8, 7, 6},
+		{5, 4, 3, 2},
+	}
+	got := Multiply(mat, id)
+	if !Equal(want, got) {
+		t.Errorf("want %v; got %v", want, got)
+	}
+}
+
 func TestMultiply_col_vector(t *testing.T) {
 	a := Matrix{
 		{1, 2, 3, 4},
@@ -192,6 +212,22 @@ func TestMultiply_tuple(t *testing.T) {
 	want := tuple.New(18, 24, 33, 1)
 	got := mat.Multiply(tup)
 	if !tuple.Equal(want, got) {
+		t.Errorf("want %v; got %v", want, got)
+	}
+}
+
+func TestMatrixT(t *testing.T) {
+	mat := Matrix{
+		{1, 2, 3},
+		{4, 5, 6},
+	}
+	want := Matrix{
+		{1, 4},
+		{2, 5},
+		{3, 6},
+	}
+	got := mat.T()
+	if !Equal(want, got) {
 		t.Errorf("want %v; got %v", want, got)
 	}
 }
