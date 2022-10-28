@@ -231,3 +231,12 @@ func TestMatrixT(t *testing.T) {
 		t.Errorf("want %v; got %v", want, got)
 	}
 }
+
+func TestMatrixT_identity(t *testing.T) {
+	mat := I(4)
+	want := mat
+	got := mat.T()
+	if !Equal(want, got) {
+		t.Errorf("want %v; got %v", want, got)
+	}
+}
