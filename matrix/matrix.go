@@ -113,17 +113,50 @@ func (mat Matrix) T() Matrix {
 	return trans
 }
 
-// // Get the determinant of a 2x2 matrix
-// func det2(mat Matrix) float64 {
+// Get the determinant of a 2x2 matrix
+func det2(mat Matrix) float64 {
+	return mat[0][0]*mat[1][1] - mat[0][1]*mat[1][0]
+}
 
-// }
+// Get the submatrix of a matrix
+func (mat Matrix) sub(r, c int) Matrix {
+	subMat := New(mat.Dim() - 1)
+	for y, row := range mat {
+		if y < r {
+			copy(subMat[y][:c], row[:c])
+			copy(subMat[y][c:], row[c+1:])
+		} else if y == r {
+			continue
+		} else {
+			copy(subMat[y-1], row)
+			copy(subMat[y-1][c:], row[c+1:])
+		}
+	}
+	return subMat
+}
 
-// // Get the determinant of a 3x3 matrix
-// func det3(mat Matrix) float64 {
+// Get the minor (determinant of sub matrix at (row,column) for a 3x3 matrix)
+func (mat Matrix) minor(r, c int) float64 {
+	return Det(mat.sub(r, c))
+}
 
-// }
+func (mat Matrix) cofactor(r, c int) float64 {
+	minor := mat.minor(r, c)
+	if (r+c)%2 != 0 {
+		minor *= -1
+	}
+	return minor
+}
 
-// // Get the determinant of a 4x4 matrix
-// func (mat Matrix) Det() float64 {
+// Get the determinant of a 4x4 matrix
+func Det(mat Matrix) (det float64) {
+	if mat.Dim() == 2 {
+		return det2(mat)
+	}
 
-// }
+	det = 0
+	for i := 0; i < mat.Dim(); i++ {
+		det += mat.Get(0, i) * mat.cofactor(0, i)
+	}
+	return det
+}
