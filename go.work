@@ -9,6 +9,7 @@ use (
 	./color
 	./matrix
 	./ppm
+	./transform
 	./tuple
 	./utils
 )
