@@ -160,3 +160,24 @@ func Det(mat Matrix) (det float64) {
 	}
 	return det
 }
+
+// Check if matrix is invertible
+func (mat Matrix) IsInvertible() bool {
+	return !utils.FloatEqual(Det(mat), 0)
+}
+
+// Get the inverse of a matrix
+func Inv(mat Matrix) Matrix {
+	if !mat.IsInvertible() {
+		panic("matrix is not invertible")
+	}
+	det := Det(mat)
+	invMat := New(mat.Dim())
+	for r, row := range mat {
+		for c := range row {
+			// note col,row order below accomplishes a transpose
+			invMat[c][r] = mat.cofactor(r, c) / det
+		}
+	}
+	return invMat
+}
