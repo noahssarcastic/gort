@@ -210,5 +210,15 @@ func TestShear_zy(t *testing.T) {
 }
 
 func TestChainTransforms(t *testing.T) {
-	// panic("not implemented")
+	pt := tuple.Point(1, 0, 1)
+	tform := ChainTransforms([]matrix.Matrix{
+		Rotate(math.Pi/2, 0, 0),
+		Scale(5, 5, 5),
+		Translate(10, 5, 7),
+	})
+	want := tuple.Point(15, 0, 7)
+	got := tform.MultTuple(pt)
+	if !tuple.Equal(want, got) {
+		t.Errorf("want %v; got %v", want, got)
+	}
 }

@@ -52,7 +52,11 @@ func rotateZ(rads float64) matrix.Matrix {
 }
 
 func Rotate(x, y, z float64) matrix.Matrix {
-	panic("not implemented")
+	return ChainTransforms([]matrix.Matrix{
+		rotateX(x),
+		rotateY(y),
+		rotateZ(z),
+	})
 }
 
 func Shear(xy, xz, yx, yz, zx, zy float64) matrix.Matrix {
@@ -65,5 +69,9 @@ func Shear(xy, xz, yx, yz, zx, zy float64) matrix.Matrix {
 }
 
 func ChainTransforms(tforms []matrix.Matrix) matrix.Matrix {
-	panic("not implemented")
+	final := matrix.I(4)
+	for _, t := range tforms {
+		final = matrix.Mult(t, final)
+	}
+	return final
 }
