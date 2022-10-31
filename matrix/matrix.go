@@ -84,7 +84,7 @@ func Mult(a, b Matrix) Matrix {
 }
 
 // Multiply a matrix by a tuple
-func (mat Matrix) MultTuple(t tuple.Tuple) tuple.Tuple {
+func (mat Matrix) Apply(t tuple.Tuple) tuple.Tuple {
 	return tuple.New(
 		mat[0][0]*t.X()+mat[0][1]*t.Y()+mat[0][2]*t.Z()+mat[0][3]*t.W(),
 		mat[1][0]*t.X()+mat[1][1]*t.Y()+mat[1][2]*t.Z()+mat[1][3]*t.W(),

@@ -24,7 +24,7 @@ func Scale(x, y, z float64) matrix.Matrix {
 	}
 }
 
-func rotateX(rads float64) matrix.Matrix {
+func RotateX(rads float64) matrix.Matrix {
 	return matrix.Matrix{
 		{1, 0, 0, 0},
 		{0, math.Cos(rads), -math.Sin(rads), 0},
@@ -33,7 +33,7 @@ func rotateX(rads float64) matrix.Matrix {
 	}
 }
 
-func rotateY(rads float64) matrix.Matrix {
+func RotateY(rads float64) matrix.Matrix {
 	return matrix.Matrix{
 		{math.Cos(rads), 0, math.Sin(rads), 0},
 		{0, 1, 0, 0},
@@ -42,7 +42,7 @@ func rotateY(rads float64) matrix.Matrix {
 	}
 }
 
-func rotateZ(rads float64) matrix.Matrix {
+func RotateZ(rads float64) matrix.Matrix {
 	return matrix.Matrix{
 		{math.Cos(rads), -math.Sin(rads), 0, 0},
 		{math.Sin(rads), math.Cos(rads), 0, 0},
@@ -52,11 +52,11 @@ func rotateZ(rads float64) matrix.Matrix {
 }
 
 func Rotate(x, y, z float64) matrix.Matrix {
-	return ChainTransforms([]matrix.Matrix{
-		rotateX(x),
-		rotateY(y),
-		rotateZ(z),
-	})
+	return Chain(
+		RotateX(x),
+		RotateY(y),
+		RotateZ(z),
+	)
 }
 
 func Shear(xy, xz, yx, yz, zx, zy float64) matrix.Matrix {
@@ -68,7 +68,7 @@ func Shear(xy, xz, yx, yz, zx, zy float64) matrix.Matrix {
 	}
 }
 
-func ChainTransforms(tforms []matrix.Matrix) matrix.Matrix {
+func Chain(tforms ...matrix.Matrix) matrix.Matrix {
 	final := matrix.I(4)
 	for _, t := range tforms {
 		final = matrix.Mult(t, final)

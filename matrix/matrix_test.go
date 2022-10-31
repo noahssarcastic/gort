@@ -131,7 +131,7 @@ func TestMultiply_tuple(t *testing.T) {
 	}
 	tup := tuple.New(1, 2, 3, 1)
 	want := tuple.New(18, 24, 33, 1)
-	got := mat.MultTuple(tup)
+	got := mat.Apply(tup)
 	if !tuple.Equal(want, got) {
 		t.Errorf("want %v; got %v", want, got)
 	}
