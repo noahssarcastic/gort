@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/noahssarcastic/tddraytracer/utils"
+	"github.com/noahssarcastic/tddraytracer/math/utils"
 )
 
 func TestEqual(t *testing.T) {

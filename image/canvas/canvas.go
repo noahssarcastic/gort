@@ -1,6 +1,6 @@
 package canvas
 
-import "github.com/noahssarcastic/tddraytracer/color"
+import "github.com/noahssarcastic/tddraytracer/image/color"
 
 type Canvas struct {
 	w, h   int

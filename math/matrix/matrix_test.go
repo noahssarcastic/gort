@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/noahssarcastic/tddraytracer/tuple"
-	"github.com/noahssarcastic/tddraytracer/utils"
+	"github.com/noahssarcastic/tddraytracer/math/tuple"
+	"github.com/noahssarcastic/tddraytracer/math/utils"
 )
 
 func TestAccess(t *testing.T) {

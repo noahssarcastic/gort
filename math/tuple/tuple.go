@@ -3,7 +3,7 @@ package tuple
 import (
 	"math"
 
-	"github.com/noahssarcastic/tddraytracer/utils"
+	"github.com/noahssarcastic/tddraytracer/math/utils"
 )
 
 type Tuple struct {

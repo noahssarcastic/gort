@@ -3,7 +3,7 @@ package transform
 import (
 	"math"
 
-	"github.com/noahssarcastic/tddraytracer/matrix"
+	"github.com/noahssarcastic/tddraytracer/math/matrix"
 )
 
 func Translate(x, y, z float64) matrix.Matrix {

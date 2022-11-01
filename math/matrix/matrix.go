@@ -3,8 +3,8 @@ package matrix
 import (
 	"strconv"
 
-	"github.com/noahssarcastic/tddraytracer/tuple"
-	"github.com/noahssarcastic/tddraytracer/utils"
+	"github.com/noahssarcastic/tddraytracer/math/tuple"
+	"github.com/noahssarcastic/tddraytracer/math/utils"
 )
 
 // Represents a square matrix

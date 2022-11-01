@@ -1,15 +1,17 @@
 go 1.19
 
 use (
-	./canvas
 	./cmd/run
 	./cmd/testmat
 	./cmd/testppm
 	./cmd/testtuple
-	./color
-	./matrix
-	./ppm
-	./transform
-	./tuple
-	./utils
+	./geometry/ray
+	./geometry/sphere
+	./image/canvas
+	./image/color
+	./image/ppm
+	./math/matrix
+	./math/transform
+	./math/tuple
+	./math/utils
 )

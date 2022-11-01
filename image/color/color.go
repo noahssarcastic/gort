@@ -1,6 +1,6 @@
 package color
 
-import "github.com/noahssarcastic/tddraytracer/utils"
+import "github.com/noahssarcastic/tddraytracer/math/utils"
 
 type Color struct {
 	r, g, b float64

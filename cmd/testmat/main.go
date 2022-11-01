@@ -3,11 +3,11 @@ package main
 import (
 	"math"
 
-	"github.com/noahssarcastic/tddraytracer/canvas"
-	"github.com/noahssarcastic/tddraytracer/color"
-	"github.com/noahssarcastic/tddraytracer/ppm"
-	"github.com/noahssarcastic/tddraytracer/transform"
-	"github.com/noahssarcastic/tddraytracer/tuple"
+	"github.com/noahssarcastic/tddraytracer/image/canvas"
+	"github.com/noahssarcastic/tddraytracer/image/color"
+	"github.com/noahssarcastic/tddraytracer/image/ppm"
+	"github.com/noahssarcastic/tddraytracer/math/transform"
+	"github.com/noahssarcastic/tddraytracer/math/tuple"
 )
 
 func main() {

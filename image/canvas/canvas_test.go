@@ -3,7 +3,7 @@ package canvas
 import (
 	"testing"
 
-	"github.com/noahssarcastic/tddraytracer/color"
+	"github.com/noahssarcastic/tddraytracer/image/color"
 )
 
 func TestNew(t *testing.T) {

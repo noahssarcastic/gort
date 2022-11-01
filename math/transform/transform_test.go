@@ -5,8 +5,8 @@ import (
 	"math"
 	"testing"
 
-	"github.com/noahssarcastic/tddraytracer/matrix"
-	"github.com/noahssarcastic/tddraytracer/tuple"
+	"github.com/noahssarcastic/tddraytracer/math/matrix"
+	"github.com/noahssarcastic/tddraytracer/math/tuple"
 )
 
 func TestTranslate_point(t *testing.T) {

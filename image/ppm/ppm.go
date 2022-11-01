@@ -5,8 +5,8 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/noahssarcastic/tddraytracer/canvas"
-	"github.com/noahssarcastic/tddraytracer/color"
+	"github.com/noahssarcastic/tddraytracer/image/canvas"
+	"github.com/noahssarcastic/tddraytracer/image/color"
 )
 
 func check(e error) {
