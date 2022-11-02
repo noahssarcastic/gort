@@ -5,6 +5,7 @@ use (
 	./cmd/testmat
 	./cmd/testppm
 	./cmd/testtuple
+	./geometry/intersec
 	./geometry/ray
 	./geometry/sphere
 	./image/canvas
