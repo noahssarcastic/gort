@@ -17,5 +17,7 @@
 # Executables
 build/
 
+go.work
+
 # Images
 *.ppm
