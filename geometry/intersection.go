@@ -32,7 +32,7 @@ func (x Intersection) Object() Intersecter {
 
 // A sorted list of Intersections.
 type HitList struct {
-	xs []*Intersection
+	xs []Intersection
 }
 
 // Implement sort.Interface
@@ -40,29 +40,29 @@ func (a HitList) Len() int           { return len(a.xs) }
 func (a HitList) Swap(i, j int)      { a.xs[i], a.xs[j] = a.xs[j], a.xs[i] }
 func (a HitList) Less(i, j int) bool { return a.xs[i].t < a.xs[j].t }
 
-func search(xs []*Intersection, new *Intersection) int {
+func search(xs []Intersection, new *Intersection) int {
 	return sort.Search(len(xs), func(i int) bool {
 		return xs[i].t >= new.t
 	})
 }
 
-func insertAt(xs []*Intersection, i int, new *Intersection) []*Intersection {
+func insertAt(xs []Intersection, i int, new *Intersection) []Intersection {
 	if i == len(xs) {
-		return append(xs, new)
+		return append(xs, *new)
 	}
 	xs = append(xs[:i+1], xs[i:]...)
-	xs[i] = new
+	xs[i] = *new
 	return xs
 }
 
-func insertSorted(xs []*Intersection, new *Intersection) []*Intersection {
+func insertSorted(xs []Intersection, new *Intersection) []Intersection {
 	foundAt := search(xs, new)
 	return insertAt(xs, foundAt, new)
 }
 
 // Collate intersection in sorted order.
 func Combine(xs ...*Intersection) HitList {
-	sortedList := make([]*Intersection, 0, len(xs))
+	sortedList := make([]Intersection, 0, len(xs))
 	for _, el := range xs {
 		sortedList = insertSorted(sortedList, el)
 	}
@@ -78,5 +78,5 @@ func (hl HitList) Hit() *Intersection {
 	if i >= len(xs) {
 		return nil
 	}
-	return xs[i]
+	return &xs[i]
 }

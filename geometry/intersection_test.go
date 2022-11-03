@@ -10,6 +10,16 @@ func (obj *ObjectMock) Intersect(ray Ray) []Intersection {
 	return []Intersection{}
 }
 
+func intersectEqual(i1, i2 *Intersection) bool {
+	if i1.t != i2.t {
+		return false
+	}
+	if i1.object != i2.object {
+		return false
+	}
+	return true
+}
+
 func TestHit_all_positive(t *testing.T) {
 	obj := &ObjectMock{}
 	i1 := NewIntersection(1, obj)
@@ -17,7 +27,7 @@ func TestHit_all_positive(t *testing.T) {
 	xs := Combine(i1, i2)
 	want := i1
 	got := xs.Hit()
-	if want != got {
+	if !intersectEqual(want, got) {
 		t.Errorf("want %v; got %v", want, got)
 	}
 }
@@ -29,7 +39,7 @@ func TestHit_some_negative(t *testing.T) {
 	xs := Combine(i1, i2)
 	want := i2
 	got := xs.Hit()
-	if want != got {
+	if !intersectEqual(want, got) {
 		t.Errorf("want %v; got %v", want, got)
 	}
 }
@@ -55,7 +65,7 @@ func TestHit_unsorted(t *testing.T) {
 	xs := Combine(i1, i2, i3, i4)
 	want := i4
 	got := xs.Hit()
-	if want != got {
+	if !intersectEqual(want, got) {
 		t.Errorf("want %v; got %v", want, got)
 	}
 }
