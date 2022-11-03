@@ -1,4 +1,4 @@
-package geometry
+package ray
 
 import "github.com/noahssarcastic/gort/math"
 

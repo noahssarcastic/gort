@@ -4,9 +4,10 @@ import (
 	"testing"
 
 	"github.com/noahssarcastic/gort/math"
+	"github.com/noahssarcastic/gort/ray"
 )
 
-func intersectsEqual(a, b []Intersection) bool {
+func intersectsEqual(a, b []ray.Intersection) bool {
 	if len(a) != len(b) {
 		return false
 	}
@@ -26,30 +27,30 @@ func TestIntersect_inner(t *testing.T) {
 	tests := []struct {
 		name  string
 		start math.Tuple
-		want  []Intersection
+		want  []ray.Intersection
 	}{
-		{"normal", math.Point(0, 0, -5), []Intersection{
-			*NewIntersection(4, &sphere),
-			*NewIntersection(6, &sphere),
+		{"normal", math.Point(0, 0, -5), []ray.Intersection{
+			*ray.NewIntersection(4, &sphere),
+			*ray.NewIntersection(6, &sphere),
 		}},
-		{"tangent", math.Point(0, 1, -5), []Intersection{
-			*NewIntersection(5, &sphere),
-			*NewIntersection(5, &sphere),
+		{"tangent", math.Point(0, 1, -5), []ray.Intersection{
+			*ray.NewIntersection(5, &sphere),
+			*ray.NewIntersection(5, &sphere),
 		}},
-		{"miss", math.Point(0, 2, -5), []Intersection{}},
-		{"inside", math.Point(0, 0, 0), []Intersection{
-			*NewIntersection(-1, &sphere),
-			*NewIntersection(1, &sphere),
+		{"miss", math.Point(0, 2, -5), []ray.Intersection{}},
+		{"inside", math.Point(0, 0, 0), []ray.Intersection{
+			*ray.NewIntersection(-1, &sphere),
+			*ray.NewIntersection(1, &sphere),
 		}},
-		{"behind", math.Point(0, 0, 5), []Intersection{
-			*NewIntersection(-6, &sphere),
-			*NewIntersection(-4, &sphere),
+		{"behind", math.Point(0, 0, 5), []ray.Intersection{
+			*ray.NewIntersection(-6, &sphere),
+			*ray.NewIntersection(-4, &sphere),
 		}},
 	}
 	for _, tt := range tests {
 		name := tt.name
 		t.Run(name, func(t *testing.T) {
-			ans := sphere.Intersect(NewRay(tt.start, math.Vector(0, 0, 1)))
+			ans := sphere.Intersect(ray.NewRay(tt.start, math.Vector(0, 0, 1)))
 			if !intersectsEqual(tt.want, ans) {
 				t.Errorf("got %v, want %v", ans, tt.want)
 			}

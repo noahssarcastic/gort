@@ -4,6 +4,7 @@ import (
 	stdmath "math"
 
 	"github.com/noahssarcastic/gort/math"
+	"github.com/noahssarcastic/gort/ray"
 )
 
 type Sphere struct {
@@ -23,17 +24,17 @@ func (sphere *Sphere) Radius() float64 {
 	return sphere.radius
 }
 
-func (sphere *Sphere) Intersect(ray Ray) []Intersection {
-	sphereToRay := ray.Origin().Sub(sphere.origin)
-	a := math.Dot(ray.Direction(), ray.Direction())
-	b := 2 * math.Dot(ray.Direction(), sphereToRay)
+func (sphere *Sphere) Intersect(r ray.Ray) []ray.Intersection {
+	sphereToRay := r.Origin().Sub(sphere.origin)
+	a := math.Dot(r.Direction(), r.Direction())
+	b := 2 * math.Dot(r.Direction(), sphereToRay)
 	c := math.Dot(sphereToRay, sphereToRay) - 1
 	discriminant := stdmath.Pow(b, 2) - 4*a*c
 	if discriminant < 0 {
-		return []Intersection{}
+		return []ray.Intersection{}
 	}
-	return []Intersection{
-		*NewIntersection((-b-stdmath.Sqrt(discriminant))/(2*a), sphere),
-		*NewIntersection((-b+stdmath.Sqrt(discriminant))/(2*a), sphere),
+	return []ray.Intersection{
+		*ray.NewIntersection((-b-stdmath.Sqrt(discriminant))/(2*a), sphere),
+		*ray.NewIntersection((-b+stdmath.Sqrt(discriminant))/(2*a), sphere),
 	}
 }
