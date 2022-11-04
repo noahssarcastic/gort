@@ -67,7 +67,7 @@ func Shear(xy, xz, yx, yz, zx, zy float64) Matrix {
 }
 
 func Chain(tforms ...Matrix) Matrix {
-	final := I(4)
+	final := I()
 	for _, t := range tforms {
 		final = Mult(t, final)
 	}

@@ -8,12 +8,13 @@ import (
 )
 
 type Sphere struct {
-	origin math.Tuple
-	radius float64
+	origin    math.Tuple
+	radius    float64
+	transform math.Matrix
 }
 
 func NewSphere() Sphere {
-	return Sphere{math.Point(0, 0, 0), 1}
+	return Sphere{math.Point(0, 0, 0), 1, math.I()}
 }
 
 func (sphere *Sphere) Origin() math.Tuple {
@@ -24,7 +25,12 @@ func (sphere *Sphere) Radius() float64 {
 	return sphere.radius
 }
 
+func (sphere *Sphere) SetTransform(mat math.Matrix) {
+	sphere.transform = mat
+}
+
 func (sphere *Sphere) Intersect(r ray.Ray) []ray.Intersection {
+	r = r.Transform(math.Inv(sphere.transform))
 	sphereToRay := r.Origin().Sub(sphere.origin)
 	a := math.Dot(r.Direction(), r.Direction())
 	b := 2 * math.Dot(r.Direction(), sphereToRay)

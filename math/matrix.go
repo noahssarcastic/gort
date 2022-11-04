@@ -91,7 +91,8 @@ func (mat Matrix) Apply(t Tuple) Tuple {
 }
 
 // Get the identity matrix
-func I(dim int) Matrix {
+func I() Matrix {
+	dim := 4
 	mat := NewMatrix(dim)
 	for i := 0; i < dim; i++ {
 		mat.Set(i, i, 1)

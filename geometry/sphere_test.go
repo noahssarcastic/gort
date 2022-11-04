@@ -22,7 +22,7 @@ func intersectsEqual(a, b []ray.Intersection) bool {
 	return true
 }
 
-func TestIntersect_inner(t *testing.T) {
+func TestIntersect(t *testing.T) {
 	sphere := NewSphere()
 	tests := []struct {
 		name  string
@@ -50,6 +50,42 @@ func TestIntersect_inner(t *testing.T) {
 	for _, tt := range tests {
 		name := tt.name
 		t.Run(name, func(t *testing.T) {
+			ans := sphere.Intersect(ray.NewRay(tt.start, math.Vector(0, 0, 1)))
+			if !intersectsEqual(tt.want, ans) {
+				t.Errorf("got %v, want %v", ans, tt.want)
+			}
+		})
+	}
+}
+
+func TestIntersect_transformed(t *testing.T) {
+	sphere := NewSphere()
+	tests := []struct {
+		name  string
+		tform math.Matrix
+		start math.Tuple
+		want  []ray.Intersection
+	}{
+		{
+			"scale",
+			math.Scale(2, 2, 2),
+			math.Point(0, 0, -5),
+			[]ray.Intersection{
+				*ray.NewIntersection(3, &sphere),
+				*ray.NewIntersection(7, &sphere),
+			},
+		},
+		{
+			"translate",
+			math.Translate(5, 0, 0),
+			math.Point(0, 0, -5),
+			[]ray.Intersection{},
+		},
+	}
+	for _, tt := range tests {
+		name := tt.name
+		t.Run(name, func(t *testing.T) {
+			sphere.SetTransform(tt.tform)
 			ans := sphere.Intersect(ray.NewRay(tt.start, math.Vector(0, 0, 1)))
 			if !intersectsEqual(tt.want, ans) {
 				t.Errorf("got %v, want %v", ans, tt.want)
