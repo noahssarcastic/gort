@@ -70,6 +70,10 @@ func Red() Color {
 	return Color{1, 0, 0}
 }
 
+func Black() Color {
+	return Color{0, 0, 0}
+}
+
 func clampValue(val float64) float64 {
 	if val < 0 {
 		return 0

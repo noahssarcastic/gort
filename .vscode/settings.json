@@ -8,6 +8,7 @@
     "Pixmap",
     "stdmath",
     "tddraytracer",
-    "tform"
+    "tform",
+    "tforms"
   ]
 }

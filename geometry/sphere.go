@@ -13,8 +13,8 @@ type Sphere struct {
 	transform math.Matrix
 }
 
-func NewSphere() Sphere {
-	return Sphere{math.Point(0, 0, 0), 1, math.I()}
+func NewSphere(mat math.Matrix) *Sphere {
+	return &Sphere{math.Point(0, 0, 0), 1, mat}
 }
 
 func (sphere *Sphere) Origin() math.Tuple {

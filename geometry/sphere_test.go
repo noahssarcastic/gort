@@ -23,28 +23,28 @@ func intersectsEqual(a, b []ray.Intersection) bool {
 }
 
 func TestIntersect(t *testing.T) {
-	sphere := NewSphere()
+	sphere := NewSphere(math.I())
 	tests := []struct {
 		name  string
 		start math.Tuple
 		want  []ray.Intersection
 	}{
 		{"normal", math.Point(0, 0, -5), []ray.Intersection{
-			*ray.NewIntersection(4, &sphere),
-			*ray.NewIntersection(6, &sphere),
+			*ray.NewIntersection(4, sphere),
+			*ray.NewIntersection(6, sphere),
 		}},
 		{"tangent", math.Point(0, 1, -5), []ray.Intersection{
-			*ray.NewIntersection(5, &sphere),
-			*ray.NewIntersection(5, &sphere),
+			*ray.NewIntersection(5, sphere),
+			*ray.NewIntersection(5, sphere),
 		}},
 		{"miss", math.Point(0, 2, -5), []ray.Intersection{}},
 		{"inside", math.Point(0, 0, 0), []ray.Intersection{
-			*ray.NewIntersection(-1, &sphere),
-			*ray.NewIntersection(1, &sphere),
+			*ray.NewIntersection(-1, sphere),
+			*ray.NewIntersection(1, sphere),
 		}},
 		{"behind", math.Point(0, 0, 5), []ray.Intersection{
-			*ray.NewIntersection(-6, &sphere),
-			*ray.NewIntersection(-4, &sphere),
+			*ray.NewIntersection(-6, sphere),
+			*ray.NewIntersection(-4, sphere),
 		}},
 	}
 	for _, tt := range tests {
@@ -59,7 +59,7 @@ func TestIntersect(t *testing.T) {
 }
 
 func TestIntersect_transformed(t *testing.T) {
-	sphere := NewSphere()
+	sphere := NewSphere(math.I())
 	tests := []struct {
 		name  string
 		tform math.Matrix
@@ -71,8 +71,8 @@ func TestIntersect_transformed(t *testing.T) {
 			math.Scale(2, 2, 2),
 			math.Point(0, 0, -5),
 			[]ray.Intersection{
-				*ray.NewIntersection(3, &sphere),
-				*ray.NewIntersection(7, &sphere),
+				*ray.NewIntersection(3, sphere),
+				*ray.NewIntersection(7, sphere),
 			},
 		},
 		{

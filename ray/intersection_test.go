@@ -24,9 +24,11 @@ func TestHit_all_positive(t *testing.T) {
 	obj := &ObjectMock{}
 	i1 := NewIntersection(1, obj)
 	i2 := NewIntersection(2, obj)
-	xs := Combine(i1, i2)
+	xs := make([]Intersection, 0, 2)
+	xs = InsertIntersection(xs, i1)
+	xs = InsertIntersection(xs, i2)
 	want := i1
-	got := xs.Hit()
+	got := Hit(xs)
 	if !intersectEqual(want, got) {
 		t.Errorf("want %v; got %v", want, got)
 	}
@@ -36,9 +38,11 @@ func TestHit_some_negative(t *testing.T) {
 	obj := &ObjectMock{}
 	i1 := NewIntersection(-1, obj)
 	i2 := NewIntersection(1, obj)
-	xs := Combine(i1, i2)
+	xs := make([]Intersection, 0, 2)
+	xs = InsertIntersection(xs, i1)
+	xs = InsertIntersection(xs, i2)
 	want := i2
-	got := xs.Hit()
+	got := Hit(xs)
 	if !intersectEqual(want, got) {
 		t.Errorf("want %v; got %v", want, got)
 	}
@@ -48,9 +52,11 @@ func TestHit_all_negative(t *testing.T) {
 	obj := &ObjectMock{}
 	i1 := NewIntersection(-2, obj)
 	i2 := NewIntersection(-1, obj)
-	xs := Combine(i1, i2)
+	xs := make([]Intersection, 0, 2)
+	xs = InsertIntersection(xs, i1)
+	xs = InsertIntersection(xs, i2)
 	var want *Intersection = nil
-	got := xs.Hit()
+	got := Hit(xs)
 	if want != got {
 		t.Errorf("want %v; got %v", want, got)
 	}
@@ -62,9 +68,13 @@ func TestHit_unsorted(t *testing.T) {
 	i2 := NewIntersection(7, obj)
 	i3 := NewIntersection(-3, obj)
 	i4 := NewIntersection(2, obj)
-	xs := Combine(i1, i2, i3, i4)
+	xs := make([]Intersection, 0, 2)
+	xs = InsertIntersection(xs, i1)
+	xs = InsertIntersection(xs, i2)
+	xs = InsertIntersection(xs, i3)
+	xs = InsertIntersection(xs, i4)
 	want := i4
-	got := xs.Hit()
+	got := Hit(xs)
 	if !intersectEqual(want, got) {
 		t.Errorf("want %v; got %v", want, got)
 	}
