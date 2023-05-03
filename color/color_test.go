@@ -1,4 +1,4 @@
-package image
+package color
 
 import (
 	"fmt"
@@ -18,7 +18,7 @@ func TestColorEquality(t *testing.T) {
 	for _, tt := range tests {
 		name := fmt.Sprintf("%v,%v", tt.c1, tt.c2)
 		t.Run(name, func(t *testing.T) {
-			ans := ColorEqual(tt.c1, tt.c2)
+			ans := Equal(tt.c1, tt.c2)
 			if ans != tt.want {
 				t.Errorf("got %v, want %v", ans, tt.want)
 			}
@@ -29,9 +29,9 @@ func TestColorEquality(t *testing.T) {
 func TestAddColors(t *testing.T) {
 	c1 := Color{0.1, 0.2, 0.3}
 	c2 := Color{0.4, 0.5, 0.6}
-	got := c1.Add(c2)
+	got := Add(c1, c2)
 	want := Color{0.5, 0.7, 0.9}
-	if !ColorEqual(want, got) {
+	if !Equal(want, got) {
 		t.Errorf("want %v; got %v", want, got)
 	}
 }
@@ -39,9 +39,9 @@ func TestAddColors(t *testing.T) {
 func TestSubtractColors(t *testing.T) {
 	c1 := Color{0.4, 0.5, 0.6}
 	c2 := Color{0.1, 0.2, 0.3}
-	got := c1.Sub(c2)
+	got := Sub(c1, c2)
 	want := Color{0.3, 0.3, 0.3}
-	if !ColorEqual(want, got) {
+	if !Equal(want, got) {
 		t.Errorf("want %v; got %v", want, got)
 	}
 }
@@ -49,9 +49,9 @@ func TestSubtractColors(t *testing.T) {
 func TestMultiplyColorByScalar(t *testing.T) {
 	c := Color{0.1, 0.2, 0.3}
 	scalar := 2.0
-	got := c.Mult(scalar)
+	got := Mult(c, scalar)
 	want := Color{0.2, 0.4, 0.6}
-	if !ColorEqual(want, got) {
+	if !Equal(want, got) {
 		t.Errorf("want %v; got %v", want, got)
 	}
 }
@@ -61,7 +61,7 @@ func TestPiecewiseMultiplyColors(t *testing.T) {
 	c2 := Color{0.1, 0.2, 0.3}
 	got := PiecewiseMult(c1, c2)
 	want := Color{0.04, 0.1, 0.18}
-	if !ColorEqual(want, got) {
+	if !Equal(want, got) {
 		t.Errorf("want %v; got %v", want, got)
 	}
 }
@@ -77,8 +77,8 @@ func TestClampColor(t *testing.T) {
 	for _, tt := range tests {
 		name := fmt.Sprintf("%v", tt.c)
 		t.Run(name, func(t *testing.T) {
-			ans := tt.c.Clamp()
-			if !ColorEqual(ans, tt.want) {
+			ans := Clamp(tt.c)
+			if !Equal(ans, tt.want) {
 				t.Errorf("got %v, want %v", ans, tt.want)
 			}
 		})

@@ -1,27 +1,28 @@
-run_module = github.com/noahssarcastic/tddraytracer/cmd/run
-
-test_modules = ./geometry/ray \
-	./geometry/sphere \
-	./image/canvas \
-	./image/color \
-	./image/ppm \
-	./math/matrix \
-	./math/transform \
-	./math/tuple \
-	./math/utils
-
 default: build
 
-.PHONY: run
-run:
-	@go run $(run_module)
+run_path = ./cmd/trace
 
 .PHONY: build
 build:
-	@go build -o ./build/tddraytracer $(run_module)
+	@go build -o ./build/trace $(run_path)
+
+.PHONY: run
+run:
+	@go run $(run_path)
 
 .PHONY: test
 test:
-	@for mod in $(test_modules); do \
-		go test $$mod; \
-	done
+	@go test ./...
+
+.PHONY: setup
+setup:
+	@go work use -r .
+
+clean:
+	-rm *.ppm
+
+smoketest:
+	go run ./cmd/ppm
+	go run ./cmd/clock
+	go run ./cmd/projectile
+	go run ./cmd/trace

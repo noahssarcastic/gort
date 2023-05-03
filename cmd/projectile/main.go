@@ -1,8 +1,12 @@
-package cmd
+package main
 
 import (
+	"os"
+
+	"github.com/noahssarcastic/gort/color"
 	"github.com/noahssarcastic/gort/image"
 	"github.com/noahssarcastic/gort/math"
+	"github.com/noahssarcastic/gort/ppm"
 )
 
 type projectile struct {
@@ -19,32 +23,37 @@ func tick(env environment, proj projectile) projectile {
 	return projectile{newPosition, newVelocity}
 }
 
-func RunProjectile() {
+func main() {
 	proj := projectile{math.Point(0, 1, 0), math.Norm(math.Vector(1, 1, 0)).Mult(4)}
 	env := environment{math.Vector(0, -0.1, 0), math.Vector(0, 0, 0)}
-
-	canv := image.NewCanvas(200, 100)
-
+	img := image.New(200, 100)
 	tickCount := 0
 loop:
 	for {
 		tickCount += 1
 		proj = tick(env, proj)
-
-		// fmt.Printf("Tick: %v; Position: %v\n", tickCount, proj.position)
-
 		x := int(proj.position.X())
 		y := int(proj.position.Y())
-		if x >= 0 && x < canv.Width() && y >= 0 && y < canv.Height() {
-			println(x, y)
-			canv.SetPixel(x, (canv.Height()-1)-y, image.Red())
-
+		if x >= 0 && x < img.Width() && y >= 0 && y < img.Height() {
+			img.Set(x, (img.Height()-1)-y, color.Red())
 		}
-
 		if proj.position.Y() <= 0 {
 			break loop
 		}
 	}
+	pm := image.ImageToPixelMap(*img)
 
-	image.CanvasToPixmap(canv).WritePPM()
+	f, err := os.OpenFile("projectile.ppm",
+		os.O_RDWR|os.O_CREATE|os.O_TRUNC,
+		0755)
+	if err != nil {
+		panic(err)
+	}
+	defer func() {
+		err := f.Close()
+		if err != nil {
+			panic(err)
+		}
+	}()
+	ppm.WritePPM(f, pm)
 }

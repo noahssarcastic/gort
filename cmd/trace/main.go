@@ -1,24 +1,27 @@
 package main
 
 import (
+	"os"
+
+	"github.com/noahssarcastic/gort/color"
 	"github.com/noahssarcastic/gort/geometry"
 	"github.com/noahssarcastic/gort/image"
 	"github.com/noahssarcastic/gort/math"
+	"github.com/noahssarcastic/gort/ppm"
 	"github.com/noahssarcastic/gort/ray"
 )
 
 func main() {
-	width := 500
-	height := 500
-	canv := image.NewCanvas(width, height)
+	w, h := 500, 500
+	img := image.New(w, h)
 
 	eye := math.Point(0, 0, -10)
 	screenOrigin := math.Point(0, 0, 0)
 
 	// assume eye and screen are one the same ground plane
 	cellCenterPadding := 0.5
-	startingX := screenOrigin.X() - float64(width)/2 + cellCenterPadding
-	startingY := screenOrigin.Y() - float64(height)/2 + cellCenterPadding
+	x0 := screenOrigin.X() - float64(w)/2 + cellCenterPadding
+	y0 := screenOrigin.Y() - float64(h)/2 + cellCenterPadding
 
 	objects := []ray.Object{
 		geometry.NewSphere(math.Chain(
@@ -26,11 +29,11 @@ func main() {
 		)),
 	}
 
-	for y := 0; y < height; y++ {
-		for x := 0; x < width; x++ {
+	for y := 0; y < h; y++ {
+		for x := 0; x < w; x++ {
 			screenCellCenter := math.Point(
-				startingX+float64(x),
-				startingY+float64(y),
+				x0+float64(x),
+				y0+float64(y),
 				screenOrigin.Z(),
 			)
 			rayDir := screenCellCenter.Sub(eye)
@@ -44,13 +47,25 @@ func main() {
 			}
 			hit := ray.Hit(xs)
 			if hit != nil {
-				canv.SetPixel(x, y, image.Red())
+				img.Set(x, y, color.Red())
 			} else {
-				canv.SetPixel(x, y, image.Black())
+				img.Set(x, y, color.Black())
 			}
 		}
 	}
 
-	image.CanvasToPixmap(canv).WritePPM()
-
+	pm := image.ImageToPixelMap(*img)
+	f, err := os.OpenFile("trace.ppm",
+		os.O_RDWR|os.O_CREATE|os.O_TRUNC,
+		0755)
+	if err != nil {
+		panic(err)
+	}
+	defer func() {
+		err := f.Close()
+		if err != nil {
+			panic(err)
+		}
+	}()
+	ppm.WritePPM(f, pm)
 }
