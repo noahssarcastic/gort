@@ -3,8 +3,8 @@ package geometry
 import (
 	stdmath "math"
 
-	"github.com/noahssarcastic/gort/math"
-	"github.com/noahssarcastic/gort/ray"
+	"github.com/noahssarcastic/gort/pkg/math"
+	"github.com/noahssarcastic/gort/pkg/ray"
 )
 
 type Sphere struct {

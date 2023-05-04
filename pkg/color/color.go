@@ -2,7 +2,7 @@
 package color
 
 import (
-	"github.com/noahssarcastic/gort/math"
+	"github.com/noahssarcastic/gort/pkg/math"
 )
 
 // A Color represents an RGB color with component values between [0,1].

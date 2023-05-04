@@ -3,7 +3,7 @@ package image
 import (
 	"testing"
 
-	"github.com/noahssarcastic/gort/color"
+	"github.com/noahssarcastic/gort/pkg/color"
 )
 
 func TestWidth(t *testing.T) {

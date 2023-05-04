@@ -1,12 +1,17 @@
 package main
 
 import (
+	"flag"
 	"os"
 
-	"github.com/noahssarcastic/gort/ppm"
+	"github.com/noahssarcastic/gort/pkg/ppm"
 )
 
+var out = flag.String("o", "test.ppm", "output image path")
+
 func main() {
+	flag.Parse()
+
 	w, h := 100, 100
 	pm := ppm.New(w, h)
 	for y := 0; y < h; y++ {
@@ -19,7 +24,7 @@ func main() {
 		}
 	}
 
-	f, err := os.OpenFile("test.ppm", os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0755)
+	f, err := os.OpenFile(*out, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0755)
 	if err != nil {
 		panic(err)
 	}

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/noahssarcastic/gort/math"
+	"github.com/noahssarcastic/gort/pkg/math"
 )
 
 func rayEqual(r1, r2 Ray) bool {

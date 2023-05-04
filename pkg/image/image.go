@@ -2,8 +2,8 @@
 package image
 
 import (
-	"github.com/noahssarcastic/gort/color"
-	"github.com/noahssarcastic/gort/ppm"
+	"github.com/noahssarcastic/gort/pkg/color"
+	"github.com/noahssarcastic/gort/pkg/ppm"
 )
 
 // Image stores a 2D array of color.Color values.

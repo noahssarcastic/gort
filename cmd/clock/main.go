@@ -1,16 +1,21 @@
 package main
 
 import (
+	"flag"
 	stdmath "math"
 	"os"
 
-	"github.com/noahssarcastic/gort/color"
-	"github.com/noahssarcastic/gort/image"
-	"github.com/noahssarcastic/gort/math"
-	"github.com/noahssarcastic/gort/ppm"
+	"github.com/noahssarcastic/gort/pkg/color"
+	"github.com/noahssarcastic/gort/pkg/image"
+	"github.com/noahssarcastic/gort/pkg/math"
+	"github.com/noahssarcastic/gort/pkg/ppm"
 )
 
+var out = flag.String("o", "test.ppm", "output image path")
+
 func main() {
+	flag.Parse()
+
 	img := image.New(100, 100)
 	for i := 1; i <= 12; i++ {
 		pt := math.Point(1, 0, 0)
@@ -26,7 +31,7 @@ func main() {
 	}
 	pm := image.ImageToPixelMap(*img)
 
-	f, err := os.OpenFile("clock.ppm", os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0755)
+	f, err := os.OpenFile(*out, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0755)
 	if err != nil {
 		panic(err)
 	}

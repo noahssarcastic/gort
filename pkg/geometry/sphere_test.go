@@ -3,8 +3,8 @@ package geometry
 import (
 	"testing"
 
-	"github.com/noahssarcastic/gort/math"
-	"github.com/noahssarcastic/gort/ray"
+	"github.com/noahssarcastic/gort/pkg/math"
+	"github.com/noahssarcastic/gort/pkg/ray"
 )
 
 func intersectsEqual(a, b []ray.Intersection) bool {

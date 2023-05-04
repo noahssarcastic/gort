@@ -19,10 +19,12 @@ setup:
 	@go work use -r .
 
 clean:
-	-rm *.ppm
+	-rm -f ./**/*.ppm
 
+.PHONY: smoketest
 smoketest:
-	go run ./cmd/ppm
-	go run ./cmd/clock
-	go run ./cmd/projectile
-	go run ./cmd/trace
+	@mkdir -p output
+	go run ./cmd/ppm -o output/test.ppm
+	go run ./cmd/clock -o output/clock.ppm
+	go run ./cmd/projectile -o output/projectile.ppm
+	go run ./cmd/trace -o output/trace.ppm

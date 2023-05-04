@@ -1,17 +1,22 @@
 package main
 
 import (
+	"flag"
 	"os"
 
-	"github.com/noahssarcastic/gort/color"
-	"github.com/noahssarcastic/gort/geometry"
-	"github.com/noahssarcastic/gort/image"
-	"github.com/noahssarcastic/gort/math"
-	"github.com/noahssarcastic/gort/ppm"
-	"github.com/noahssarcastic/gort/ray"
+	"github.com/noahssarcastic/gort/pkg/color"
+	"github.com/noahssarcastic/gort/pkg/geometry"
+	"github.com/noahssarcastic/gort/pkg/image"
+	"github.com/noahssarcastic/gort/pkg/math"
+	"github.com/noahssarcastic/gort/pkg/ppm"
+	"github.com/noahssarcastic/gort/pkg/ray"
 )
 
+var out = flag.String("o", "trace.ppm", "output image path")
+
 func main() {
+	flag.Parse()
+
 	w, h := 500, 500
 	img := image.New(w, h)
 
@@ -55,7 +60,7 @@ func main() {
 	}
 
 	pm := image.ImageToPixelMap(*img)
-	f, err := os.OpenFile("trace.ppm",
+	f, err := os.OpenFile(*out,
 		os.O_RDWR|os.O_CREATE|os.O_TRUNC,
 		0755)
 	if err != nil {

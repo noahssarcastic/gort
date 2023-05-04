@@ -1,6 +1,6 @@
 package ray
 
-import "github.com/noahssarcastic/gort/math"
+import "github.com/noahssarcastic/gort/pkg/math"
 
 type Ray struct {
 	origin    math.Tuple

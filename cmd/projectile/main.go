@@ -1,12 +1,13 @@
 package main
 
 import (
+	"flag"
 	"os"
 
-	"github.com/noahssarcastic/gort/color"
-	"github.com/noahssarcastic/gort/image"
-	"github.com/noahssarcastic/gort/math"
-	"github.com/noahssarcastic/gort/ppm"
+	"github.com/noahssarcastic/gort/pkg/color"
+	"github.com/noahssarcastic/gort/pkg/image"
+	"github.com/noahssarcastic/gort/pkg/math"
+	"github.com/noahssarcastic/gort/pkg/ppm"
 )
 
 type projectile struct {
@@ -23,7 +24,11 @@ func tick(env environment, proj projectile) projectile {
 	return projectile{newPosition, newVelocity}
 }
 
+var out = flag.String("o", "test.ppm", "output image path")
+
 func main() {
+	flag.Parse()
+
 	proj := projectile{math.Point(0, 1, 0), math.Norm(math.Vector(1, 1, 0)).Mult(4)}
 	env := environment{math.Vector(0, -0.1, 0), math.Vector(0, 0, 0)}
 	img := image.New(200, 100)
@@ -43,7 +48,7 @@ loop:
 	}
 	pm := image.ImageToPixelMap(*img)
 
-	f, err := os.OpenFile("projectile.ppm",
+	f, err := os.OpenFile(*out,
 		os.O_RDWR|os.O_CREATE|os.O_TRUNC,
 		0755)
 	if err != nil {
