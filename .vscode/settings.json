@@ -3,11 +3,13 @@
     "cofactor",
     "gort",
     "intersec",
+    "Intersectable",
     "Intersecter",
     "Mult",
     "noahssarcastic",
     "Pixmap",
     "stdmath",
+    "submatrix",
     "tddraytracer",
     "tform",
     "tforms"

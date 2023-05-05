@@ -1,34 +1,43 @@
 package ray
 
-import "github.com/noahssarcastic/gort/pkg/math"
+import (
+	"github.com/noahssarcastic/gort/pkg/mat"
+	"github.com/noahssarcastic/gort/pkg/tuple"
+)
 
+// Ray represents a 3D ray. Ray is immutable.
 type Ray struct {
-	origin    math.Tuple
-	direction math.Tuple
+	origin    tuple.Tuple
+	direction tuple.Tuple
 }
 
-func NewRay(origin math.Tuple, direction math.Tuple) Ray {
+// New creates a 3D ray originating from origin and pointing in direction.
+func New(origin tuple.Tuple, direction tuple.Tuple) Ray {
 	return Ray{
 		origin,
 		direction,
 	}
 }
 
-func (ray Ray) Origin() math.Tuple {
+// Origin returns the origin of a Ray.
+func (ray Ray) Origin() tuple.Tuple {
 	return ray.origin
 }
 
-func (ray Ray) Direction() math.Tuple {
+// Direction returns the direction of a Ray.
+func (ray Ray) Direction() tuple.Tuple {
 	return ray.direction
 }
 
-func Position(ray Ray, t float64) math.Tuple {
-	return ray.origin.Add(ray.direction.Mult(t))
+// Position calculates the coordinates a distance t from the origin.
+func Position(ray Ray, t float64) tuple.Tuple {
+	return tuple.Add(ray.origin, tuple.Mult(ray.direction, t))
 }
 
-func (r Ray) Transform(mat math.Matrix) Ray {
+// Transform creates a new Ray which is the product of Matrix tform and Ray r.
+func Transform(r Ray, tform mat.Matrix) Ray {
 	return Ray{
-		origin:    mat.Apply(r.origin),
-		direction: mat.Apply(r.direction),
+		origin:    tform.Apply(r.origin),
+		direction: tform.Apply(r.direction),
 	}
 }

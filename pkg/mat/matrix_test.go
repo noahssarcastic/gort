@@ -1,8 +1,11 @@
-package math
+package mat
 
 import (
 	"fmt"
 	"testing"
+
+	"github.com/noahssarcastic/gort/pkg/tuple"
+	"github.com/noahssarcastic/gort/pkg/util"
 )
 
 func TestMatrixAccess(t *testing.T) {
@@ -66,7 +69,7 @@ func TestMatrixEqual(t *testing.T) {
 	for _, tt := range tests {
 		name := fmt.Sprintf("%v,%v", tt.a, tt.b)
 		t.Run(name, func(t *testing.T) {
-			ans := MatrixEqual(tt.a, tt.b)
+			ans := Equal(tt.a, tt.b)
 			if ans != tt.want {
 				t.Errorf("got %v, want %v", ans, tt.want)
 			}
@@ -94,7 +97,7 @@ func TestMatrixMult(t *testing.T) {
 		{16, 26, 46, 42},
 	}
 	got := Mult(a, b)
-	if !MatrixEqual(want, got) {
+	if !Equal(want, got) {
 		t.Errorf("want %v; got %v", want, got)
 	}
 }
@@ -114,7 +117,7 @@ func TestMult_identity(t *testing.T) {
 		{5, 4, 3, 2},
 	}
 	got := Mult(mat, id)
-	if !MatrixEqual(want, got) {
+	if !Equal(want, got) {
 		t.Errorf("want %v; got %v", want, got)
 	}
 }
@@ -126,10 +129,10 @@ func TestMatrixApply(t *testing.T) {
 		{8, 6, 4, 1},
 		{0, 0, 0, 1},
 	}
-	tup := NewTuple(1, 2, 3, 1)
-	want := NewTuple(18, 24, 33, 1)
+	tup := tuple.New(1, 2, 3, 1)
+	want := tuple.New(18, 24, 33, 1)
 	got := mat.Apply(tup)
-	if !TupleEqual(want, got) {
+	if !tuple.Equal(want, got) {
 		t.Errorf("want %v; got %v", want, got)
 	}
 }
@@ -146,7 +149,7 @@ func TestMatrixT(t *testing.T) {
 		{3, 6, 6},
 	}
 	got := mat.T()
-	if !MatrixEqual(want, got) {
+	if !Equal(want, got) {
 		t.Errorf("want %v; got %v", want, got)
 	}
 }
@@ -155,7 +158,7 @@ func TestMatrixT_identity(t *testing.T) {
 	mat := I()
 	want := mat
 	got := mat.T()
-	if !MatrixEqual(want, got) {
+	if !Equal(want, got) {
 		t.Errorf("want %v; got %v", want, got)
 	}
 }
@@ -167,7 +170,7 @@ func TestMatrixDet2(t *testing.T) {
 	}
 	want := 17.
 	got := det2(mat)
-	if !FloatEqual(want, got) {
+	if !util.FloatEqual(want, got) {
 		t.Errorf("want %v; got %v", want, got)
 	}
 }
@@ -220,7 +223,7 @@ func TestMatrixSub(t *testing.T) {
 		name := fmt.Sprintf("dim%v,(%v,%v)", tt.mat.Dim(), tt.r, tt.c)
 		t.Run(name, func(t *testing.T) {
 			ans := tt.mat.sub(tt.r, tt.c)
-			if !MatrixEqual(ans, tt.want) {
+			if !Equal(ans, tt.want) {
 				t.Errorf("got %v, want %v", ans, tt.want)
 			}
 		})
@@ -235,7 +238,7 @@ func TestMatrixMinor(t *testing.T) {
 	}
 	want := 25.
 	got := mat.minor(1, 0)
-	if !FloatEqual(want, got) {
+	if !util.FloatEqual(want, got) {
 		t.Errorf("want %v; got %v", want, got)
 	}
 }
@@ -269,7 +272,7 @@ func TestMatrixCofactor(t *testing.T) {
 		name := fmt.Sprintf("dim%v,(%v,%v)", tt.mat.Dim(), tt.r, tt.c)
 		t.Run(name, func(t *testing.T) {
 			ans := tt.mat.cofactor(tt.r, tt.c)
-			if !FloatEqual(ans, tt.want) {
+			if !util.FloatEqual(ans, tt.want) {
 				t.Errorf("got %v, want %v", ans, tt.want)
 			}
 		})
@@ -303,7 +306,7 @@ func TestMatrixDet(t *testing.T) {
 		name := fmt.Sprintf("dim%v", tt.mat.Dim())
 		t.Run(name, func(t *testing.T) {
 			ans := Det(tt.mat)
-			if !FloatEqual(ans, tt.want) {
+			if !util.FloatEqual(ans, tt.want) {
 				t.Errorf("got %v, want %v", ans, tt.want)
 			}
 		})
@@ -390,7 +393,7 @@ func TestMatrixInv(t *testing.T) {
 		name := fmt.Sprintf("%v", i)
 		t.Run(name, func(t *testing.T) {
 			ans := Inv(tt.mat)
-			if !MatrixEqual(ans, tt.want) {
+			if !Equal(ans, tt.want) {
 				t.Errorf("got %v, want %v", ans, tt.want)
 			}
 		})
@@ -412,7 +415,7 @@ func TestMatrixMult_undo(t *testing.T) {
 	}
 	want := a
 	got := Mult(Mult(a, b), Inv(b))
-	if !MatrixEqual(want, got) {
+	if !Equal(want, got) {
 		t.Errorf("want %v; got %v", want, got)
 	}
 }

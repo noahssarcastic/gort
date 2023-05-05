@@ -19,7 +19,7 @@ setup:
 	@go work use -r .
 
 clean:
-	-rm -f ./**/*.ppm
+	-rm output/*.ppm
 
 .PHONY: smoketest
 smoketest:
@@ -27,4 +27,8 @@ smoketest:
 	go run ./cmd/ppm -o output/test.ppm
 	go run ./cmd/clock -o output/clock.ppm
 	go run ./cmd/projectile -o output/projectile.ppm
-	go run ./cmd/trace -o output/trace.ppm
+	go run ./cmd/scene -o output/scene.ppm
+
+.PHONY: docs
+docs:
+	xdg-open https://pkg.go.dev/github.com/noahssarcastic/gort

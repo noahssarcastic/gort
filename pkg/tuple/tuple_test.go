@@ -1,11 +1,13 @@
-package math
+package tuple
 
 import (
 	"fmt"
 	"testing"
+
+	"github.com/noahssarcastic/gort/pkg/util"
 )
 
-func TestTupleEqual(t *testing.T) {
+func TestEqual(t *testing.T) {
 	var tests = []struct {
 		a, b Tuple
 		want bool
@@ -18,7 +20,7 @@ func TestTupleEqual(t *testing.T) {
 	for _, tt := range tests {
 		name := fmt.Sprintf("%v,%v", tt.a, tt.b)
 		t.Run(name, func(t *testing.T) {
-			ans := TupleEqual(tt.a, tt.b)
+			ans := Equal(tt.a, tt.b)
 			if ans != tt.want {
 				t.Errorf("got %v, want %v", ans, tt.want)
 			}
@@ -48,8 +50,8 @@ func TestAddVectors(t *testing.T) {
 	v1 := Vector(1, 2, 3)
 	v2 := Vector(4, 5, 6)
 	want := Vector(5, 7, 9)
-	got := v1.Add(v2)
-	if !TupleEqual(want, got) {
+	got := Add(v1, v2)
+	if !Equal(want, got) {
 		t.Errorf("Vector(1, 2, 3).Add(Vector(4, 5, 6)) = %v; want %v", got, want)
 	}
 }
@@ -58,8 +60,8 @@ func TestAddPointAndVector(t *testing.T) {
 	pt := Point(1, 2, 3)
 	vec := Vector(4, 5, 6)
 	want := Point(5, 7, 9)
-	got := pt.Add(vec)
-	if !TupleEqual(want, got) {
+	got := Add(pt, vec)
+	if !Equal(want, got) {
 		t.Errorf("Point(1, 2, 3).Add(Vector(4, 5, 6)) = %v; want %v", got, want)
 	}
 }
@@ -68,8 +70,8 @@ func TestSubVectors(t *testing.T) {
 	v1 := Vector(1, 2, 3)
 	v2 := Vector(4, 5, 6)
 	want := Vector(-3, -3, -3)
-	got := v1.Sub(v2)
-	if !TupleEqual(want, got) {
+	got := Sub(v1, v2)
+	if !Equal(want, got) {
 		t.Errorf("Vector(1, 2, 3).Sub(Vector(4, 5, 6)) = %v; want %v", got, want)
 	}
 }
@@ -78,8 +80,8 @@ func TestSubPoints(t *testing.T) {
 	p1 := Point(1, 2, 3)
 	p2 := Point(4, 5, 6)
 	want := Vector(-3, -3, -3)
-	got := p1.Sub(p2)
-	if !TupleEqual(want, got) {
+	got := Sub(p1, p2)
+	if !Equal(want, got) {
 		t.Errorf("Point(1, 2, 3).Sub(Point(4, 5, 6)) = %v; want %v", got, want)
 	}
 }
@@ -88,8 +90,8 @@ func TestSubVectorFromPoint(t *testing.T) {
 	pt := Point(1, 2, 3)
 	vec := Vector(4, 5, 6)
 	want := Point(-3, -3, -3)
-	got := pt.Sub(vec)
-	if !TupleEqual(want, got) {
+	got := Sub(pt, vec)
+	if !Equal(want, got) {
 		t.Errorf("Point(1, 2, 3).Sub(Vector(4, 5, 6)) = %v; want %v", got, want)
 	}
 }
@@ -98,7 +100,7 @@ func TestNegVector(t *testing.T) {
 	vec := Vector(1, 2, 3)
 	want := Vector(-1, -2, -3)
 	got := Neg(vec)
-	if !TupleEqual(want, got) {
+	if !Equal(want, got) {
 		t.Errorf("Neg(Vector(1, 2, 3)) = %v; want %v", got, want)
 	}
 }
@@ -107,8 +109,8 @@ func TestMultVector(t *testing.T) {
 	vec := Vector(1, 2, 3)
 	scalar := 2.0
 	want := Vector(2, 4, 6)
-	got := vec.Mult(scalar)
-	if !TupleEqual(want, got) {
+	got := Mult(vec, scalar)
+	if !Equal(want, got) {
 		t.Errorf("Vector(1, 2, 3).Mult(2) = %v; want %v", got, want)
 	}
 }
@@ -117,8 +119,8 @@ func TestDivideVector(t *testing.T) {
 	vec := Vector(1, 2, 3)
 	scalar := 2.0
 	want := Vector(0.5, 1, 1.5)
-	got := vec.Div(scalar)
-	if !TupleEqual(want, got) {
+	got := Div(vec, scalar)
+	if !Equal(want, got) {
 		t.Errorf("Vector(1, 2, 3).Divide(2) = %v; want %v", got, want)
 	}
 }
@@ -158,7 +160,7 @@ func TestNormalize(t *testing.T) {
 		name := fmt.Sprintf("%v", tt.t)
 		t.Run(name, func(t *testing.T) {
 			ans := Norm(tt.t)
-			if !TupleEqual(tt.want, ans) {
+			if !Equal(tt.want, ans) {
 				t.Errorf("got %v, want %v", ans, tt.want)
 			}
 		})
@@ -170,7 +172,7 @@ func TestMagOfUnitVector(t *testing.T) {
 	unitVec := Norm(vec)
 	want := 1.
 	got := Mag(unitVec)
-	if !FloatEqual(want, got) {
+	if !util.FloatEqual(want, got) {
 		t.Errorf("Mag(Normalize(Vector(1, 2, 3))) = %v; want %v", got, want)
 	}
 }
@@ -180,7 +182,7 @@ func TestDotProduct(t *testing.T) {
 	v2 := Vector(2, 3, 4)
 	want := 20.
 	got := Dot(v1, v2)
-	if !FloatEqual(want, got) {
+	if !util.FloatEqual(want, got) {
 		t.Errorf("Mag(Normalize(Vector(1, 2, 3))) = %v; want %v", got, want)
 	}
 }
@@ -199,7 +201,7 @@ func TestCrossProduct(t *testing.T) {
 		name := fmt.Sprintf("%v,%v", tt.t1, tt.t2)
 		t.Run(name, func(t *testing.T) {
 			ans := Cross(tt.t1, tt.t2)
-			if !TupleEqual(tt.want, ans) {
+			if !Equal(tt.want, ans) {
 				t.Errorf("got %v, want %v", ans, tt.want)
 			}
 		})

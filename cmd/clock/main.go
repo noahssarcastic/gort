@@ -2,13 +2,14 @@ package main
 
 import (
 	"flag"
-	stdmath "math"
+	"math"
 	"os"
 
 	"github.com/noahssarcastic/gort/pkg/color"
 	"github.com/noahssarcastic/gort/pkg/image"
-	"github.com/noahssarcastic/gort/pkg/math"
+	"github.com/noahssarcastic/gort/pkg/mat"
 	"github.com/noahssarcastic/gort/pkg/ppm"
+	"github.com/noahssarcastic/gort/pkg/tuple"
 )
 
 var out = flag.String("o", "test.ppm", "output image path")
@@ -18,11 +19,11 @@ func main() {
 
 	img := image.New(100, 100)
 	for i := 1; i <= 12; i++ {
-		pt := math.Point(1, 0, 0)
-		tform := math.Chain(
-			math.Scale(30, 0, 0),
-			math.RotateZ(2.*stdmath.Pi/12*float64(i)),
-			math.Translate(float64(img.Width())/2, float64(img.Width())/2, 0),
+		pt := tuple.Point(1, 0, 0)
+		tform := mat.Chain(
+			mat.Scale(30, 0, 0),
+			mat.RotateZ(2.*math.Pi/12*float64(i)),
+			mat.Translate(float64(img.Width())/2, float64(img.Width())/2, 0),
 		)
 		pt = tform.Apply(pt)
 		x := int(pt.X())

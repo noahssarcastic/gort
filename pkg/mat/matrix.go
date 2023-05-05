@@ -1,13 +1,17 @@
-package math
+package mat
 
 import (
 	"strconv"
+
+	"github.com/noahssarcastic/gort/pkg/tuple"
+	"github.com/noahssarcastic/gort/pkg/util"
 )
 
-// Represents a square matrix
+// Matrix keeps a 2D array of float64s representing a square matrix.
 type Matrix [][]float64
 
-func NewMatrix(dim int) Matrix {
+// New initializes an empty Matrix with dimension dim.
+func New(dim int) Matrix {
 	mat := make(Matrix, dim)
 	for i := range mat {
 		mat[i] = make([]float64, dim)
@@ -15,6 +19,7 @@ func NewMatrix(dim int) Matrix {
 	return mat
 }
 
+// String returns a human readable string representation of a Matrix.
 func (mat Matrix) String() string {
 	s := []byte{'['}
 	for y, row := range mat {
@@ -36,29 +41,29 @@ func (mat Matrix) String() string {
 	return string(append(s, ']'))
 }
 
-// Get the dimension of the matrix
+// Dim gets the dimension of the matrix.
 func (mat Matrix) Dim() int {
 	return len(mat[0])
 }
 
-// Get the value at (row, column)
-func (mat Matrix) Get(r, c int) float64 {
-	return mat[r][c]
+// Get accesses the value at (row, col).
+func (mat Matrix) Get(row, col int) float64 {
+	return mat[row][col]
 }
 
-// Set the value at (row, column)
-func (mat Matrix) Set(r, c int, val float64) {
-	mat[r][c] = val
+// Set changes the value at (row, col) to val.
+func (mat Matrix) Set(row, col int, val float64) {
+	mat[row][col] = val
 }
 
-// Check if two matrices are equal
-func MatrixEqual(a, b Matrix) bool {
+// Equal returns true if two Matrices are equal.
+func Equal(a, b Matrix) bool {
 	if a.Dim() != b.Dim() {
 		return false
 	}
 	for y := 0; y < a.Dim(); y++ {
 		for x := 0; x < a.Dim(); x++ {
-			if !FloatEqual(a.Get(y, x), b.Get(y, x)) {
+			if !util.FloatEqual(a.Get(y, x), b.Get(y, x)) {
 				return false
 			}
 		}
@@ -66,9 +71,9 @@ func MatrixEqual(a, b Matrix) bool {
 	return true
 }
 
-// Multiply two 4x4 matrices
+// Mult takes two 4x4 Matrices and returns the product.
 func Mult(a, b Matrix) Matrix {
-	newMat := NewMatrix(4)
+	newMat := New(4)
 	for y, row := range newMat {
 		for x := range row {
 			row[x] = a.Get(y, 0)*b.Get(0, x) +
@@ -80,9 +85,9 @@ func Mult(a, b Matrix) Matrix {
 	return newMat
 }
 
-// Multiply a matrix by a tuple
-func (mat Matrix) Apply(t Tuple) Tuple {
-	return NewTuple(
+// Apply returns the product of a 4x4 Matrix and a tuple.Tuple.
+func (mat Matrix) Apply(t tuple.Tuple) tuple.Tuple {
+	return tuple.New(
 		mat[0][0]*t.X()+mat[0][1]*t.Y()+mat[0][2]*t.Z()+mat[0][3]*t.W(),
 		mat[1][0]*t.X()+mat[1][1]*t.Y()+mat[1][2]*t.Z()+mat[1][3]*t.W(),
 		mat[2][0]*t.X()+mat[2][1]*t.Y()+mat[2][2]*t.Z()+mat[2][3]*t.W(),
@@ -90,19 +95,19 @@ func (mat Matrix) Apply(t Tuple) Tuple {
 	)
 }
 
-// Get the identity matrix
+// I initializes and returns the 4x4 identity matrix.
 func I() Matrix {
 	dim := 4
-	mat := NewMatrix(dim)
+	mat := New(dim)
 	for i := 0; i < dim; i++ {
 		mat.Set(i, i, 1)
 	}
 	return mat
 }
 
-// Get the transpose of the matrix
+// T initializes a new Matrix that is the transpose of mat.
 func (mat Matrix) T() Matrix {
-	trans := NewMatrix(mat.Dim())
+	trans := New(mat.Dim())
 	for y, row := range mat {
 		for x, el := range row {
 			trans.Set(x, y, el)
@@ -111,14 +116,15 @@ func (mat Matrix) T() Matrix {
 	return trans
 }
 
-// Get the determinant of a 2x2 matrix
+// det2 calculates the determinant of a 2x2 matrix.
 func det2(mat Matrix) float64 {
 	return mat[0][0]*mat[1][1] - mat[0][1]*mat[1][0]
 }
 
-// Get the submatrix of a matrix
+// sub calculates the submatrix of a Matrix mat. The submatrix of a Matrix mat
+// is a Matrix in which the row r and column c have been removed from mat.
 func (mat Matrix) sub(r, c int) Matrix {
-	subMat := NewMatrix(mat.Dim() - 1)
+	subMat := New(mat.Dim() - 1)
 	for y, row := range mat {
 		if y < r {
 			copy(subMat[y][:c], row[:c])
@@ -133,11 +139,12 @@ func (mat Matrix) sub(r, c int) Matrix {
 	return subMat
 }
 
-// Get the minor (determinant of sub matrix at (row,column) for a 3x3 matrix)
+// minor calculates the minor of a 3x3 matrix at (r,c).
 func (mat Matrix) minor(r, c int) float64 {
 	return Det(mat.sub(r, c))
 }
 
+// cofactor calculates the cofactor of a 3x3 matrix at (r,c).
 func (mat Matrix) cofactor(r, c int) float64 {
 	minor := mat.minor(r, c)
 	if (r+c)%2 != 0 {
@@ -146,7 +153,7 @@ func (mat Matrix) cofactor(r, c int) float64 {
 	return minor
 }
 
-// Get the determinant of a 4x4 matrix
+// Det calculates the determinant of a 4x4 matrix.
 func Det(mat Matrix) (det float64) {
 	if mat.Dim() == 2 {
 		return det2(mat)
@@ -159,21 +166,21 @@ func Det(mat Matrix) (det float64) {
 	return det
 }
 
-// Check if matrix is invertible
+// IsInvertible returns true if a Matrix mat is invertible.
 func (mat Matrix) IsInvertible() bool {
-	return !FloatEqual(Det(mat), 0)
+	return !util.FloatEqual(Det(mat), 0)
 }
 
-// Get the inverse of a matrix
+// Inv initializes a new Matrix which is the inverse of a Matrix mat.
 func Inv(mat Matrix) Matrix {
 	if !mat.IsInvertible() {
 		panic("matrix is not invertible")
 	}
 	det := Det(mat)
-	invMat := NewMatrix(mat.Dim())
+	invMat := New(mat.Dim())
 	for r, row := range mat {
 		for c := range row {
-			// note col,row order below accomplishes a transpose
+			// (col,row) order accomplishes a transpose
 			invMat[c][r] = mat.cofactor(r, c) / det
 		}
 	}

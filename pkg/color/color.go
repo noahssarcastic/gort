@@ -1,9 +1,7 @@
 // Package color implements an RGB color value and provides common utilities.
 package color
 
-import (
-	"github.com/noahssarcastic/gort/pkg/math"
-)
+import "github.com/noahssarcastic/gort/pkg/util"
 
 // A Color represents an RGB color with component values between [0,1].
 // The zero value for Color is black.
@@ -27,9 +25,9 @@ func (c Color) B() float64 { return c.b }
 
 // Equal returns true if the given Colors are equal.
 func Equal(c1, c2 Color) bool {
-	return math.FloatEqual(c1.r, c2.r) &&
-		math.FloatEqual(c1.g, c2.g) &&
-		math.FloatEqual(c1.b, c2.b)
+	return util.FloatEqual(c1.r, c2.r) &&
+		util.FloatEqual(c1.g, c2.g) &&
+		util.FloatEqual(c1.b, c2.b)
 }
 
 // Add returns the component-wise sum of two Colors.
