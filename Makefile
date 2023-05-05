@@ -8,7 +8,11 @@ build:
 
 .PHONY: run
 run:
-	@go run $(run_path)
+	@go run $(run_path) -o trace.ppm
+
+.PHONY: cpuprofile
+cpuprofile:
+	@go run $(run_path) -o trace.ppm -prof trace.prof
 
 .PHONY: test
 test:
@@ -19,7 +23,8 @@ setup:
 	@go work use -r .
 
 clean:
-	-rm output/*.ppm
+	rm -f *.ppm *.prof
+	rm -rf output
 
 .PHONY: smoketest
 smoketest:
@@ -29,6 +34,6 @@ smoketest:
 	go run ./cmd/projectile -o output/projectile.ppm
 	go run ./cmd/scene -o output/scene.ppm
 
-.PHONY: docs
-docs:
-	xdg-open https://pkg.go.dev/github.com/noahssarcastic/gort
+# .PHONY: docs
+# docs:
+# 	xdg-open https://pkg.go.dev/github.com/noahssarcastic/gort

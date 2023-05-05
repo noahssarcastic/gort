@@ -3,6 +3,7 @@ package main
 import (
 	"errors"
 	"flag"
+	"runtime/pprof"
 
 	"github.com/noahssarcastic/gort/pkg/color"
 	"github.com/noahssarcastic/gort/pkg/geo"
@@ -19,6 +20,11 @@ func main() {
 	flag.Parse()
 	initConfig()
 	defer cleanUp()
+
+	if cfg.profile != nil {
+		pprof.StartCPUProfile(cfg.profile)
+		defer pprof.StopCPUProfile()
+	}
 
 	w, h := 500, 500
 	img := image.New(w, h)

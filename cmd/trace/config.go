@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"runtime/pprof"
 )
 
 type config struct {
@@ -29,8 +28,6 @@ func initConfig() {
 		if err != nil {
 			log.Panic(err)
 		}
-		pprof.StartCPUProfile(cfg.profile)
-		defer pprof.StopCPUProfile()
 	}
 	if cfg.filePath == "" {
 		log.Panic(fmt.Errorf("-o not set"))
@@ -46,10 +43,12 @@ func initConfig() {
 
 func cleanUp() {
 	handleFileClose(cfg.file)
-	handleFileClose(cfg.profile)
 }
 
 func handleFileClose(f *os.File) {
+	if f == nil {
+		return
+	}
 	err := f.Close()
 	if err != nil {
 		log.Panic(err)
