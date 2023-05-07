@@ -2,6 +2,7 @@ package tuple
 
 import (
 	"fmt"
+	"math"
 	"testing"
 
 	"github.com/noahssarcastic/gort/pkg/util"
@@ -202,6 +203,34 @@ func TestCrossProduct(t *testing.T) {
 		t.Run(name, func(t *testing.T) {
 			ans := Cross(tt.t1, tt.t2)
 			if !Equal(tt.want, ans) {
+				t.Errorf("got %v, want %v", ans, tt.want)
+			}
+		})
+	}
+}
+
+func TestReflect(t *testing.T) {
+	tests := []struct {
+		in   Tuple
+		norm Tuple
+		want Tuple
+	}{
+		{
+			Vector(1, -1, 0),
+			Vector(0, 1, 0),
+			Vector(1, 1, 0),
+		},
+		{
+			Vector(0, -1, 0),
+			Vector(math.Sqrt(2)/2, math.Sqrt(2)/2, 0),
+			Vector(1, 0, 0),
+		},
+	}
+	for i, tt := range tests {
+		name := fmt.Sprint(i)
+		t.Run(name, func(t *testing.T) {
+			ans := Reflect(tt.in, tt.norm)
+			if !Equal(ans, tt.want) {
 				t.Errorf("got %v, want %v", ans, tt.want)
 			}
 		})

@@ -96,6 +96,11 @@ func Add(a, b Tuple) Tuple {
 	}
 }
 
+// Add calculates the component-wise sum of two Tuples.
+func (t1 Tuple) Add(t2 Tuple) Tuple {
+	return Add(t1, t2)
+}
+
 // Sub calculates the component-wise difference of two Tuples.
 func Sub(a, b Tuple) Tuple {
 	return Tuple{
@@ -104,6 +109,11 @@ func Sub(a, b Tuple) Tuple {
 		z: a.z - b.z,
 		w: a.w - b.w,
 	}
+}
+
+// Sub calculates the component-wise difference of two Tuples.
+func (t1 Tuple) Sub(t2 Tuple) Tuple {
+	return Sub(t1, t2)
 }
 
 // Neg calculates the component-wise negation of a Tuple.
@@ -164,4 +174,9 @@ func Cross(a, b Tuple) Tuple {
 		a.z*b.x-a.x*b.z,
 		a.x*b.y-a.y*b.x,
 	)
+}
+
+// Reflect returns the reflection of vector in along vector norm.
+func Reflect(in, norm Tuple) Tuple {
+	return in.Sub(Mult(norm, 2*Dot(in, norm)))
 }
