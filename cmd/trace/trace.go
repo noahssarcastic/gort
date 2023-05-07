@@ -20,7 +20,6 @@ func main() {
 	flag.Parse()
 	initConfig()
 	defer cleanUp()
-
 	if cfg.profile != nil {
 		pprof.StartCPUProfile(cfg.profile)
 		defer pprof.StopCPUProfile()

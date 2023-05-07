@@ -42,3 +42,15 @@ func (sphere *Sphere) Intersect(r ray.Ray) []ray.Intersect {
 		ray.NewIntersect((-b+math.Sqrt(discriminant))/(2*a), sphere),
 	}
 }
+
+// NormalAt returns the normal vector at a given point along the Sphere.
+// The returned vector is normalized. Passing a point not on the surface of the
+// Sphere is undefined.
+func (sphere *Sphere) NormalAt(pt tuple.Tuple) tuple.Tuple {
+	ptObjSpace := mat.Inv(sphere.transform).Apply(pt)
+	normalObjSpace := tuple.Sub(ptObjSpace, tuple.Point(0, 0, 0))
+	normalWrldSpace := mat.Inv(sphere.transform).T().Apply(normalObjSpace)
+	// reset w component if mangled by transpose
+	return tuple.Norm(tuple.Vector(
+		normalWrldSpace.X(), normalWrldSpace.Y(), normalWrldSpace.Z()))
+}

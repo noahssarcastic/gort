@@ -1,6 +1,8 @@
 package geo
 
 import (
+	"fmt"
+	"math"
 	"testing"
 
 	"github.com/noahssarcastic/gort/pkg/mat"
@@ -90,6 +92,74 @@ func TestIntersect_transformed(t *testing.T) {
 			sphere.SetTransform(tt.tform)
 			ans := sphere.Intersect(ray.New(tt.start, tuple.Vector(0, 0, 1)))
 			if !intersectsEqual(tt.want, ans) {
+				t.Errorf("got %v, want %v", ans, tt.want)
+			}
+		})
+	}
+}
+
+func TestNormalAt(t *testing.T) {
+	sphere := NewSphere(mat.I())
+	tests := []struct {
+		pt   tuple.Tuple
+		want tuple.Tuple
+	}{
+		{tuple.Point(1, 0, 0), tuple.Vector(1, 0, 0)},
+		{tuple.Point(0, 1, 0), tuple.Vector(0, 1, 0)},
+		{tuple.Point(0, 0, 1), tuple.Vector(0, 0, 1)},
+		{
+			tuple.Point(math.Sqrt(3)/3, math.Sqrt(3)/3, math.Sqrt(3)/3),
+			tuple.Vector(math.Sqrt(3)/3, math.Sqrt(3)/3, math.Sqrt(3)/3),
+		},
+	}
+	for i, tt := range tests {
+		name := fmt.Sprint(i)
+		t.Run(name, func(t *testing.T) {
+			ans := sphere.NormalAt(tt.pt)
+			if !tuple.Equal(ans, tt.want) {
+				t.Errorf("got %v, want %v", ans, tt.want)
+			}
+		})
+	}
+}
+
+func TestNormalAt_normalized(t *testing.T) {
+	sphere := NewSphere(mat.I())
+	pt := tuple.Point(math.Sqrt(3)/3, math.Sqrt(3)/3, math.Sqrt(3)/3)
+	normal := sphere.NormalAt(pt)
+	want := tuple.Norm(normal)
+	got := normal
+	if !tuple.Equal(want, got) {
+		t.Errorf("want %v; got %v", want, got)
+	}
+}
+
+func TestNormalAt_transformed(t *testing.T) {
+	tests := []struct {
+		pt    tuple.Tuple
+		tform mat.Matrix
+		want  tuple.Tuple
+	}{
+		{
+			tuple.Point(0, 1.70711, -0.70711),
+			mat.Translate(0, 1, 0),
+			tuple.Vector(0, 0.70711, -0.70711),
+		},
+		{
+			tuple.Point(0, math.Sqrt(2)/2, -math.Sqrt(2)/2),
+			mat.Chain(
+				mat.RotateZ(math.Pi/5),
+				mat.Scale(1, 0.5, 1),
+			),
+			tuple.Vector(0, 0.97014, -0.24254),
+		},
+	}
+	for i, tt := range tests {
+		name := fmt.Sprint(i)
+		t.Run(name, func(t *testing.T) {
+			sphere := NewSphere(tt.tform)
+			ans := sphere.NormalAt(tt.pt)
+			if !tuple.Equal(ans, tt.want) {
 				t.Errorf("got %v, want %v", ans, tt.want)
 			}
 		})
