@@ -1,7 +1,7 @@
 package ray
 
 import (
-	"github.com/noahssarcastic/gort/pkg/mat"
+	"github.com/noahssarcastic/gort/pkg/matrix"
 	"github.com/noahssarcastic/gort/pkg/tuple"
 )
 
@@ -35,7 +35,7 @@ func Position(ray Ray, t float64) tuple.Tuple {
 }
 
 // Transform creates a new Ray which is the product of Matrix tform and Ray r.
-func Transform(r Ray, tform mat.Matrix) Ray {
+func Transform(r Ray, tform matrix.Matrix) Ray {
 	return Ray{
 		origin:    tform.Apply(r.origin),
 		direction: tform.Apply(r.direction),

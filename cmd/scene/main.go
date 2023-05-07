@@ -8,7 +8,7 @@ import (
 	"github.com/noahssarcastic/gort/pkg/color"
 	"github.com/noahssarcastic/gort/pkg/geo"
 	"github.com/noahssarcastic/gort/pkg/image"
-	"github.com/noahssarcastic/gort/pkg/mat"
+	"github.com/noahssarcastic/gort/pkg/matrix"
 	"github.com/noahssarcastic/gort/pkg/ppm"
 	"github.com/noahssarcastic/gort/pkg/ray"
 	"github.com/noahssarcastic/gort/pkg/tuple"
@@ -33,8 +33,8 @@ func main() {
 	y0 := screenOrigin.Y() - float64(h)/2 + cellCenterPadding
 
 	objects := []Object{
-		geo.NewSphere(mat.Chain(
-			mat.Scale(100, 50, 100),
+		geo.NewSphere(matrix.Chain(
+			matrix.Scale(100, 50, 100),
 		)),
 	}
 

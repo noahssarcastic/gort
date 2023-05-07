@@ -5,7 +5,7 @@ import (
 	"math"
 	"testing"
 
-	"github.com/noahssarcastic/gort/pkg/mat"
+	"github.com/noahssarcastic/gort/pkg/matrix"
 	"github.com/noahssarcastic/gort/pkg/ray"
 	"github.com/noahssarcastic/gort/pkg/tuple"
 	"github.com/noahssarcastic/gort/pkg/util"
@@ -27,7 +27,7 @@ func intersectsEqual(a, b []ray.Intersect) bool {
 }
 
 func TestIntersect(t *testing.T) {
-	sphere := NewSphere(mat.I())
+	sphere := NewSphere(matrix.I())
 	tests := []struct {
 		name  string
 		start tuple.Tuple
@@ -63,16 +63,16 @@ func TestIntersect(t *testing.T) {
 }
 
 func TestIntersect_transformed(t *testing.T) {
-	sphere := NewSphere(mat.I())
+	sphere := NewSphere(matrix.I())
 	tests := []struct {
 		name  string
-		tform mat.Matrix
+		tform matrix.Matrix
 		start tuple.Tuple
 		want  []ray.Intersect
 	}{
 		{
 			"scale",
-			mat.Scale(2, 2, 2),
+			matrix.Scale(2, 2, 2),
 			tuple.Point(0, 0, -5),
 			[]ray.Intersect{
 				ray.NewIntersect(3, sphere),
@@ -81,7 +81,7 @@ func TestIntersect_transformed(t *testing.T) {
 		},
 		{
 			"translate",
-			mat.Translate(5, 0, 0),
+			matrix.Translate(5, 0, 0),
 			tuple.Point(0, 0, -5),
 			[]ray.Intersect{},
 		},
@@ -99,7 +99,7 @@ func TestIntersect_transformed(t *testing.T) {
 }
 
 func TestNormalAt(t *testing.T) {
-	sphere := NewSphere(mat.I())
+	sphere := NewSphere(matrix.I())
 	tests := []struct {
 		pt   tuple.Tuple
 		want tuple.Tuple
@@ -124,7 +124,7 @@ func TestNormalAt(t *testing.T) {
 }
 
 func TestNormalAt_normalized(t *testing.T) {
-	sphere := NewSphere(mat.I())
+	sphere := NewSphere(matrix.I())
 	pt := tuple.Point(math.Sqrt(3)/3, math.Sqrt(3)/3, math.Sqrt(3)/3)
 	normal := sphere.NormalAt(pt)
 	want := tuple.Norm(normal)
@@ -137,19 +137,19 @@ func TestNormalAt_normalized(t *testing.T) {
 func TestNormalAt_transformed(t *testing.T) {
 	tests := []struct {
 		pt    tuple.Tuple
-		tform mat.Matrix
+		tform matrix.Matrix
 		want  tuple.Tuple
 	}{
 		{
 			tuple.Point(0, 1.70711, -0.70711),
-			mat.Translate(0, 1, 0),
+			matrix.Translate(0, 1, 0),
 			tuple.Vector(0, 0.70711, -0.70711),
 		},
 		{
 			tuple.Point(0, math.Sqrt(2)/2, -math.Sqrt(2)/2),
-			mat.Chain(
-				mat.RotateZ(math.Pi/5),
-				mat.Scale(1, 0.5, 1),
+			matrix.Chain(
+				matrix.RotateZ(math.Pi/5),
+				matrix.Scale(1, 0.5, 1),
 			),
 			tuple.Vector(0, 0.97014, -0.24254),
 		},

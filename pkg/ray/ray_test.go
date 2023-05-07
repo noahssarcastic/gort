@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/noahssarcastic/gort/pkg/mat"
+	"github.com/noahssarcastic/gort/pkg/matrix"
 	"github.com/noahssarcastic/gort/pkg/tuple"
 )
 
@@ -39,17 +39,17 @@ func TestPosition(t *testing.T) {
 func TestTransform(t *testing.T) {
 	tests := []struct {
 		r    Ray
-		mat  mat.Matrix
+		mat  matrix.Matrix
 		want Ray
 	}{
 		{
 			New(tuple.Point(1, 2, 3), tuple.Vector(0, 1, 0)),
-			mat.Translate(3, 4, 5),
+			matrix.Translate(3, 4, 5),
 			New(tuple.Point(4, 6, 8), tuple.Vector(0, 1, 0)),
 		},
 		{
 			New(tuple.Point(1, 2, 3), tuple.Vector(0, 1, 0)),
-			mat.Scale(2, 3, 4),
+			matrix.Scale(2, 3, 4),
 			New(tuple.Point(2, 6, 12), tuple.Vector(0, 3, 0)),
 		},
 	}
@@ -65,7 +65,7 @@ func TestTransform(t *testing.T) {
 
 func TestTransform_no_modify(t *testing.T) {
 	r := New(tuple.Point(1, 2, 3), tuple.Vector(0, 1, 0))
-	mat := mat.Translate(3, 4, 5)
+	mat := matrix.Translate(3, 4, 5)
 	want := New(tuple.Point(1, 2, 3), tuple.Vector(0, 1, 0))
 	Transform(r, mat)
 	got := r

@@ -1,4 +1,4 @@
-package mat
+package matrix
 
 import "math"
 
