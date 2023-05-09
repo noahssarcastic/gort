@@ -27,7 +27,7 @@ func TestNew(t *testing.T) {
 	img := New(w, h)
 	for x := 0; x < w; x++ {
 		for y := 0; y < w; y++ {
-			if !color.Equal(img.Get(x, y), color.White()) {
+			if !color.Equal(img.Get(x, y), color.White) {
 				t.Errorf("pixel at %v,%v is not white", x, y)
 			}
 		}
@@ -36,8 +36,8 @@ func TestNew(t *testing.T) {
 
 func TestSet(t *testing.T) {
 	img := New(10, 10)
-	img.Set(0, 0, color.Red())
-	if want, got := color.Red(), img.Get(0, 0); !color.Equal(want, got) {
+	img.Set(0, 0, color.Red)
+	if want, got := color.Red, img.Get(0, 0); !color.Equal(want, got) {
 		t.Errorf("want %v; got %v", want, got)
 	}
 }

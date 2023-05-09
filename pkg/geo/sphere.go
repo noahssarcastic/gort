@@ -3,6 +3,7 @@ package geo
 import (
 	"math"
 
+	"github.com/noahssarcastic/gort/pkg/material"
 	"github.com/noahssarcastic/gort/pkg/matrix"
 	"github.com/noahssarcastic/gort/pkg/ray"
 	"github.com/noahssarcastic/gort/pkg/tuple"
@@ -13,16 +14,22 @@ type Sphere struct {
 	center    tuple.Tuple
 	radius    float64
 	transform matrix.Matrix
+	material  material.Material
 }
 
 // NewSphere creates a sphere with a given transformation matrix tform.
 func NewSphere(tform matrix.Matrix) *Sphere {
-	return &Sphere{tuple.Point(0, 0, 0), 1, tform}
+	return &Sphere{tuple.Point(0, 0, 0), 1, tform, material.Default()}
 }
 
 // SetTransform overwrites the Sphere's transformation matrix.
 func (sphere *Sphere) SetTransform(mat matrix.Matrix) {
 	sphere.transform = mat
+}
+
+// SetMaterial overwrites the Sphere's material.
+func (sphere *Sphere) SetMaterial(mat material.Material) {
+	sphere.material = mat
 }
 
 // Intersect takes a ray and returns an array of intersections. Intersections

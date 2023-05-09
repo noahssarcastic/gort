@@ -56,9 +56,9 @@ func main() {
 			}
 			_, err := ray.Hit(xs)
 			if errors.Is(err, ray.ErrNoHits) {
-				img.Set(x, y, color.Black())
+				img.Set(x, y, color.Black)
 			} else {
-				img.Set(x, y, color.Red())
+				img.Set(x, y, color.Red)
 			}
 		}
 	}

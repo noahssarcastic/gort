@@ -39,6 +39,11 @@ func Add(c1, c2 Color) Color {
 	}
 }
 
+// Add returns the component-wise sum of two Colors.
+func (c1 Color) Add(c2 Color) Color {
+	return Add(c1, c2)
+}
+
 // Sub returns the component-wise difference of two Colors.
 func Sub(c1, c2 Color) Color {
 	return Color{
@@ -46,6 +51,11 @@ func Sub(c1, c2 Color) Color {
 		b: c1.b - c2.b,
 		g: c1.g - c2.g,
 	}
+}
+
+// Sub returns the component-wise difference of two Colors.
+func (c1 Color) Sub(c2 Color) Color {
+	return Sub(c1, c2)
 }
 
 // Mult scales each component of a Color c by the given scalar.
@@ -66,15 +76,13 @@ func PiecewiseMult(c1 Color, c2 Color) Color {
 	}
 }
 
-func White() Color { return Color{1, 1, 1} }
-
-func Red() Color { return Color{1, 0, 0} }
-
-func Green() Color { return Color{0, 1, 0} }
-
-func Blue() Color { return Color{0, 0, 1} }
-
-func Black() Color { return Color{0, 0, 0} }
+var (
+	White = Color{1, 1, 1}
+	Red   = Color{1, 0, 0}
+	Green = Color{0, 1, 0}
+	Blue  = Color{0, 0, 1}
+	Black = Color{0, 0, 0}
+)
 
 func clampValue(val float64) float64 {
 	if val < 0 {

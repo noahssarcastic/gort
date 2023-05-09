@@ -17,7 +17,7 @@ type Image struct {
 func New(w, h int) *Image {
 	pixels := make([]color.Color, w*h)
 	for i := range pixels {
-		pixels[i] = color.White()
+		pixels[i] = color.White
 	}
 	return &Image{w, h, pixels}
 }
