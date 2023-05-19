@@ -27,7 +27,7 @@ func intersectsEqual(a, b []ray.Intersect) bool {
 }
 
 func TestIntersect(t *testing.T) {
-	sphere := NewSphere(matrix.I())
+	sphere := NewSphere()
 	tests := []struct {
 		name  string
 		start tuple.Tuple
@@ -63,7 +63,7 @@ func TestIntersect(t *testing.T) {
 }
 
 func TestIntersect_transformed(t *testing.T) {
-	sphere := NewSphere(matrix.I())
+	sphere := NewSphere()
 	tests := []struct {
 		name  string
 		tform matrix.Matrix
@@ -99,7 +99,7 @@ func TestIntersect_transformed(t *testing.T) {
 }
 
 func TestNormalAt(t *testing.T) {
-	sphere := NewSphere(matrix.I())
+	sphere := NewSphere()
 	tests := []struct {
 		pt   tuple.Tuple
 		want tuple.Tuple
@@ -124,7 +124,7 @@ func TestNormalAt(t *testing.T) {
 }
 
 func TestNormalAt_normalized(t *testing.T) {
-	sphere := NewSphere(matrix.I())
+	sphere := NewSphere()
 	pt := tuple.Point(math.Sqrt(3)/3, math.Sqrt(3)/3, math.Sqrt(3)/3)
 	normal := sphere.NormalAt(pt)
 	want := tuple.Norm(normal)
@@ -157,7 +157,8 @@ func TestNormalAt_transformed(t *testing.T) {
 	for i, tt := range tests {
 		name := fmt.Sprint(i)
 		t.Run(name, func(t *testing.T) {
-			sphere := NewSphere(tt.tform)
+			sphere := NewSphere()
+			sphere.SetTransform(tt.tform)
 			ans := sphere.NormalAt(tt.pt)
 			if !tuple.Equal(ans, tt.want) {
 				t.Errorf("got %v, want %v", ans, tt.want)

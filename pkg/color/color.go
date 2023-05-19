@@ -34,8 +34,8 @@ func Equal(c1, c2 Color) bool {
 func Add(c1, c2 Color) Color {
 	return Color{
 		r: c1.r + c2.r,
-		b: c1.b + c2.b,
 		g: c1.g + c2.g,
+		b: c1.b + c2.b,
 	}
 }
 
@@ -48,8 +48,8 @@ func (c1 Color) Add(c2 Color) Color {
 func Sub(c1, c2 Color) Color {
 	return Color{
 		r: c1.r - c2.r,
-		b: c1.b - c2.b,
 		g: c1.g - c2.g,
+		b: c1.b - c2.b,
 	}
 }
 
@@ -62,8 +62,8 @@ func (c1 Color) Sub(c2 Color) Color {
 func Mult(c Color, scalar float64) Color {
 	return Color{
 		r: c.r * scalar,
-		b: c.b * scalar,
 		g: c.g * scalar,
+		b: c.b * scalar,
 	}
 }
 
@@ -71,8 +71,8 @@ func Mult(c Color, scalar float64) Color {
 func PiecewiseMult(c1 Color, c2 Color) Color {
 	return Color{
 		r: c1.r * c2.r,
-		b: c1.b * c2.b,
 		g: c1.g * c2.g,
+		b: c1.b * c2.b,
 	}
 }
 

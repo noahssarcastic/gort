@@ -18,8 +18,8 @@ type Sphere struct {
 }
 
 // NewSphere creates a sphere with a given transformation matrix tform.
-func NewSphere(tform matrix.Matrix) *Sphere {
-	return &Sphere{tuple.Point(0, 0, 0), 1, tform, material.Default()}
+func NewSphere() *Sphere {
+	return &Sphere{tuple.Point(0, 0, 0), 1, matrix.I(), material.Default()}
 }
 
 // SetTransform overwrites the Sphere's transformation matrix.
@@ -60,4 +60,8 @@ func (sphere *Sphere) NormalAt(pt tuple.Tuple) tuple.Tuple {
 	// reset w component if mangled by transpose
 	return tuple.Norm(tuple.Vector(
 		normalWrldSpace.X(), normalWrldSpace.Y(), normalWrldSpace.Z()))
+}
+
+func (sphere *Sphere) Material() material.Material {
+	return sphere.material
 }

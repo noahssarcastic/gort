@@ -3,12 +3,23 @@ package ray
 import (
 	"errors"
 	"testing"
+
+	"github.com/noahssarcastic/gort/pkg/material"
+	"github.com/noahssarcastic/gort/pkg/tuple"
 )
 
 type ObjectMock struct{}
 
 func (objPtr *ObjectMock) Intersect(ray Ray) []Intersect {
 	return []Intersect{}
+}
+
+func (objPtr *ObjectMock) NormalAt(pt tuple.Tuple) tuple.Tuple {
+	return tuple.Vector(0, 0, 0)
+}
+
+func (objPtr *ObjectMock) Material() material.Material {
+	return material.Default()
 }
 
 func intersectEqual(i1, i2 Intersect) bool {

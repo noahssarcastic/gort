@@ -90,7 +90,7 @@ func writeRow(w io.Writer, row []pixel) (err error) {
 }
 
 func writePixel(w io.Writer, buff []byte, p pixel) (_ []byte, err error) {
-	for _, val := range []int{p.r, p.b, p.g} {
+	for _, val := range []int{p.r, p.g, p.b} {
 		str := strconv.Itoa(val)
 		if len(buff)+len(str) > maxLineLen {
 			err = flush(w, buff)

@@ -3,12 +3,17 @@ package ray
 import (
 	"errors"
 	"sort"
+
+	"github.com/noahssarcastic/gort/pkg/material"
+	"github.com/noahssarcastic/gort/pkg/tuple"
 )
 
 // Intersectable allows geometries to be intersected by rays.
 type Intersectable interface {
 	// Intersect returns an array of intersections made with ray.
 	Intersect(ray Ray) []Intersect
+	NormalAt(pt tuple.Tuple) tuple.Tuple
+	Material() material.Material
 }
 
 // Intersect represents an intersection between a Ray and an Intersectable.

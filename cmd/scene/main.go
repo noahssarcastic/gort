@@ -32,10 +32,12 @@ func main() {
 	x0 := screenOrigin.X() - float64(w)/2 + cellCenterPadding
 	y0 := screenOrigin.Y() - float64(h)/2 + cellCenterPadding
 
+	sphere := geo.NewSphere()
+	sphere.SetTransform(matrix.Chain(
+		matrix.Scale(100, 50, 100),
+	))
 	objects := []Object{
-		geo.NewSphere(matrix.Chain(
-			matrix.Scale(100, 50, 100),
-		)),
+		sphere,
 	}
 
 	for y := 0; y < h; y++ {
