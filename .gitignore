@@ -26,7 +26,8 @@ build/
 *.ppm
 output/
 
-# pprof
+# Profiling reports
 *.prof
 
-go.work
+# Mage
+mage_output_file.go

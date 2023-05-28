@@ -2,7 +2,8 @@ package main
 
 import (
 	"errors"
-	"flag"
+	"log"
+	"runtime"
 	"runtime/pprof"
 
 	"github.com/noahssarcastic/gort/pkg/color"
@@ -18,11 +19,13 @@ import (
 type Object = ray.Intersectable
 
 func main() {
-	flag.Parse()
 	initConfig()
 	defer cleanUp()
-	if cfg.profile != nil {
-		pprof.StartCPUProfile(cfg.profile)
+
+	if cfg.cpuProfile != nil {
+		if err := pprof.StartCPUProfile(cfg.cpuProfile); err != nil {
+			log.Panic("could not start cpu profile: ", err)
+		}
 		defer pprof.StopCPUProfile()
 	}
 
@@ -83,4 +86,11 @@ func main() {
 
 	pm := image.ImageToPixelMap(*img)
 	ppm.WritePPM(cfg.file, pm)
+
+	if cfg.memProfile != nil {
+		runtime.GC()
+		if err := pprof.WriteHeapProfile(cfg.memProfile); err != nil {
+			log.Panic("could not write memory profile: ", err)
+		}
+	}
 }
