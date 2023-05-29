@@ -15,6 +15,7 @@ import (
 
 const runPath = "./cmd/trace"
 
+// build ray-tracer executable under ./build/
 func Build() error {
 	if err := sh.Run("go", "mod", "download"); err != nil {
 		return err
@@ -27,16 +28,19 @@ func goRun(cmd, output string, extra ...string) error {
 	return sh.Run("go", append(args, extra...)...)
 }
 
+// run the ray-tracer and outputs image to out.ppm
 func Run() error {
 	return goRun(runPath, "out.ppm")
 }
 
 // Profiling
 
+// run the ray-tracer with cpu profiling
 func Cpuprofile() error {
 	return goRun(runPath, "out.ppm", "-cpuprofile", "cpu.prof")
 }
 
+// run the ray-tracer with memory profiling
 func Memprofile() error {
 	return goRun(runPath, "out.ppm", "-memprofile", "mem.prof")
 }
@@ -45,12 +49,14 @@ func Memprofile() error {
 
 var goTest = sh.OutCmd("go", "test")
 
+// run unit tests
 func Test() error {
 	out, err := goTest("./pkg/...")
 	fmt.Println(out)
 	return err
 }
 
+// run unit tests with test coverage
 func Cov() error {
 	_, err := goTest("-coverprofile", "cover.out", "./pkg/...")
 	if err != nil {
@@ -59,6 +65,7 @@ func Cov() error {
 	return sh.Run("go", "tool", "cover", "-html", "./cover.out")
 }
 
+// run smoke-tests and output images to ./output/
 func Smoke() error {
 	err := os.Mkdir("./output", os.ModeDir)
 	if err != nil && !os.IsExist(err) {
@@ -80,6 +87,7 @@ func Smoke() error {
 
 // Misc.
 
+// remove build artifacts and output images
 func Clean() error {
 	if err := os.RemoveAll("build"); err != nil {
 		return err
@@ -109,6 +117,7 @@ func removeGlob(glob string) error {
 	return nil
 }
 
+// open documentation
 func Docs() error {
 	url := "https://pkg.go.dev/github.com/noahssarcastic/gort"
 	switch runtime.GOOS {
