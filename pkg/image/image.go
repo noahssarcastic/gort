@@ -1,6 +1,8 @@
 // Package image provides an interface for manipulating 2D pixel data.
 package image
 
+// TODO: Convert pixels to 2D array
+
 import (
 	"github.com/noahssarcastic/gort/pkg/color"
 	"github.com/noahssarcastic/gort/pkg/ppm"

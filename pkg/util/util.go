@@ -1,5 +1,7 @@
 package util
 
+// TODO: Convert to micropackage
+
 import "math"
 
 // Epsilon is the global machine epsilon for floating point arithmetic.
