@@ -19,7 +19,7 @@ type Sphere struct {
 
 // NewSphere creates a sphere with a given transformation matrix tform.
 func NewSphere() *Sphere {
-	return &Sphere{tuple.Point(0, 0, 0), 1, matrix.I(), material.Default()}
+	return &Sphere{tuple.Point(0, 0, 0), 1, matrix.I, material.Default()}
 }
 
 // SetTransform overwrites the Sphere's transformation matrix.

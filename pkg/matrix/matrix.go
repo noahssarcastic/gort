@@ -95,14 +95,11 @@ func (mat Matrix) Apply(t tuple.Tuple) tuple.Tuple {
 	)
 }
 
-// I initializes and returns the 4x4 identity matrix.
-func I() Matrix {
-	dim := 4
-	mat := New(dim)
-	for i := 0; i < dim; i++ {
-		mat.Set(i, i, 1)
-	}
-	return mat
+var I = Matrix{
+	[]float64{1, 0, 0, 0},
+	[]float64{0, 1, 0, 0},
+	[]float64{0, 0, 1, 0},
+	[]float64{0, 0, 0, 1},
 }
 
 // T initializes a new Matrix that is the transpose of mat.

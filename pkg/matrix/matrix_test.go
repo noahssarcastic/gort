@@ -109,7 +109,7 @@ func TestMult_identity(t *testing.T) {
 		{9, 8, 7, 6},
 		{5, 4, 3, 2},
 	}
-	id := I()
+	id := I
 	want := Matrix{
 		{1, 2, 3, 4},
 		{5, 6, 7, 8},
@@ -155,7 +155,7 @@ func TestMatrixT(t *testing.T) {
 }
 
 func TestMatrixT_identity(t *testing.T) {
-	mat := I()
+	mat := I
 	want := mat
 	got := mat.T()
 	if !Equal(want, got) {

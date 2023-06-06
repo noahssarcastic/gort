@@ -79,7 +79,7 @@ func Shear(xy, xz, yx, yz, zx, zy float64) Matrix {
 // Chain takes any number of Matrices and returns a composite Matrix.
 // Matrices are applied to a ray.Intersectable in the order they are passed.
 func Chain(tforms ...Matrix) Matrix {
-	final := I()
+	final := I
 	for _, t := range tforms {
 		final = Mult(t, final)
 	}
