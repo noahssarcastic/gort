@@ -1,8 +1,6 @@
 // Package image provides an interface for manipulating 2D pixel data.
 package image
 
-// TODO: Convert pixels to 2D array
-
 import (
 	"github.com/noahssarcastic/gort/pkg/color"
 	"github.com/noahssarcastic/gort/pkg/ppm"
@@ -10,38 +8,37 @@ import (
 
 // Image stores a 2D array of color.Color values.
 type Image struct {
-	w, h   int
-	pixels []color.Color
+	pixels [][]color.Color
 }
 
 // New returns a pointer to a blank Image.
-// A blank Image is initialized with all white pixels.
+// A blank Image is initialized with all black pixels.
 func New(w, h int) *Image {
-	pixels := make([]color.Color, w*h)
+	pixels := make([][]color.Color, h)
 	for i := range pixels {
-		pixels[i] = color.White
+		pixels[i] = make([]color.Color, w)
 	}
-	return &Image{w, h, pixels}
+	return &Image{pixels}
 }
 
 // Width gets the width in pixels of a Image.
 func (img *Image) Width() int {
-	return img.w
+	return len(img.pixels[0])
 }
 
 // Height gets the height in pixels of a Image.
 func (img *Image) Height() int {
-	return img.h
+	return len(img.pixels)
 }
 
 // Get returns the color.Color value of a pixel at a given coordinate.
 func (img *Image) Get(x, y int) color.Color {
-	return img.pixels[x+y*img.w]
+	return img.pixels[y][x]
 }
 
 // Get manipulates the color.Color value of a pixel at a given coordinate.
 func (img *Image) Set(x, y int, c color.Color) {
-	img.pixels[x+y*img.w] = c
+	img.pixels[y][x] = c
 }
 
 // ImageToPixelMap converts a Image to a ppm.PixelMap.
