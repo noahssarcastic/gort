@@ -55,7 +55,7 @@ func NormalAt(sphere *Sphere, pt tuple.Tuple) tuple.Tuple {
 	normalWrldSpace := matrix.Inv(sphere.Transform).T().Apply(normalObjSpace)
 	// reset w component if mangled by transpose
 	return tuple.Norm(tuple.Vector(
-		normalWrldSpace.X(), normalWrldSpace.Y(), normalWrldSpace.Z()))
+		normalWrldSpace.X, normalWrldSpace.Y, normalWrldSpace.Z))
 }
 
 type Intersection struct {

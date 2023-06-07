@@ -36,8 +36,8 @@ func main() {
 
 	// assume eye and screen are one the same ground plane
 	cellCenterPadding := 0.5
-	x0 := screenOrigin.X() - float64(w)/2 + cellCenterPadding
-	y0 := screenOrigin.Y() - float64(h)/2 + cellCenterPadding
+	x0 := screenOrigin.X - float64(w)/2 + cellCenterPadding
+	y0 := screenOrigin.Y - float64(h)/2 + cellCenterPadding
 
 	objects := []geo.Sphere{
 		geo.NewSphere(
@@ -54,7 +54,7 @@ func main() {
 			screenCellCenter := tuple.Point(
 				(x0+float64(x))*cellSize,
 				(y0+float64(y))*cellSize,
-				screenOrigin.Z(),
+				screenOrigin.Z,
 			)
 			rayDir := tuple.Sub(screenCellCenter, eye)
 			rayDir = tuple.Norm(rayDir)

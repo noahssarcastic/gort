@@ -39,12 +39,12 @@ loop:
 	for {
 		tickCount += 1
 		proj = tick(env, proj)
-		x := int(proj.position.X())
-		y := int(proj.position.Y())
+		x := int(proj.position.X)
+		y := int(proj.position.Y)
 		if x >= 0 && x < img.Width() && y >= 0 && y < img.Height() {
 			img.Set(x, (img.Height()-1)-y, color.Red)
 		}
-		if proj.position.Y() <= 0 {
+		if proj.position.Y <= 0 {
 			break loop
 		}
 	}

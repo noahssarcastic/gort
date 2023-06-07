@@ -88,10 +88,10 @@ func Mult(a, b Matrix) Matrix {
 // Apply returns the product of a 4x4 Matrix and a tuple.Tuple.
 func (mat Matrix) Apply(t tuple.Tuple) tuple.Tuple {
 	return tuple.New(
-		mat[0][0]*t.X()+mat[0][1]*t.Y()+mat[0][2]*t.Z()+mat[0][3]*t.W(),
-		mat[1][0]*t.X()+mat[1][1]*t.Y()+mat[1][2]*t.Z()+mat[1][3]*t.W(),
-		mat[2][0]*t.X()+mat[2][1]*t.Y()+mat[2][2]*t.Z()+mat[2][3]*t.W(),
-		mat[3][0]*t.X()+mat[3][1]*t.Y()+mat[3][2]*t.Z()+mat[3][3]*t.W(),
+		mat[0][0]*t.X+mat[0][1]*t.Y+mat[0][2]*t.Z+mat[0][3]*t.W(),
+		mat[1][0]*t.X+mat[1][1]*t.Y+mat[1][2]*t.Z+mat[1][3]*t.W(),
+		mat[2][0]*t.X+mat[2][1]*t.Y+mat[2][2]*t.Z+mat[2][3]*t.W(),
+		mat[3][0]*t.X+mat[3][1]*t.Y+mat[3][2]*t.Z+mat[3][3]*t.W(),
 	)
 }
 

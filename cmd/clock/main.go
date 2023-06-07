@@ -30,8 +30,8 @@ func main() {
 			),
 		)
 		pt = tform.Apply(pt)
-		x := int(pt.X())
-		y := int(pt.Y())
+		x := int(pt.X)
+		y := int(pt.Y)
 		img.Set(x, (img.Height()-1)-y, color.Red)
 	}
 	pm := image.ImageToPixelMap(*img)

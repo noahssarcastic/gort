@@ -13,22 +13,8 @@ import (
 
 // Tuple implements points and vectors using a common struct.
 type Tuple struct {
-	x, y, z, w float64
-}
-
-// X returns the x component of the Tuple.
-func (t Tuple) X() float64 {
-	return t.x
-}
-
-// Y returns the y component of the Tuple.
-func (t Tuple) Y() float64 {
-	return t.y
-}
-
-// Z returns the z component of the Tuple.
-func (t Tuple) Z() float64 {
-	return t.z
+	X, Y, Z float64
+	w       float64
 }
 
 // W returns the w component of the Tuple. A w value of 0 represents a vector
@@ -39,9 +25,9 @@ func (t Tuple) W() float64 {
 
 // Equal returns true if two Tuples are equal.
 func Equal(a, b Tuple) bool {
-	return util.FloatEqual(a.x, b.x) &&
-		util.FloatEqual(a.y, b.y) &&
-		util.FloatEqual(a.z, b.z) &&
+	return util.FloatEqual(a.X, b.X) &&
+		util.FloatEqual(a.Y, b.Y) &&
+		util.FloatEqual(a.Z, b.Z) &&
 		util.FloatEqual(a.w, b.w)
 }
 
@@ -49,9 +35,9 @@ func Equal(a, b Tuple) bool {
 // rather than using New directly.
 func New(x, y, z, w float64) Tuple {
 	return Tuple{
-		x: x,
-		y: y,
-		z: z,
+		X: x,
+		Y: y,
+		Z: z,
 		w: w,
 	}
 }
@@ -59,9 +45,9 @@ func New(x, y, z, w float64) Tuple {
 // Point creates a new point at (x,y,z).
 func Point(x, y, z float64) Tuple {
 	return Tuple{
-		x: x,
-		y: y,
-		z: z,
+		X: x,
+		Y: y,
+		Z: z,
 		w: 1,
 	}
 }
@@ -74,9 +60,9 @@ func (t Tuple) IsPoint() bool {
 // Vector creates a new vector starting at the origin and ending at (x,y,z).
 func Vector(x, y, z float64) Tuple {
 	return Tuple{
-		x: x,
-		y: y,
-		z: z,
+		X: x,
+		Y: y,
+		Z: z,
 		w: 0,
 	}
 }
@@ -89,9 +75,9 @@ func (t Tuple) IsVector() bool {
 // Add calculates the component-wise sum of two Tuples.
 func Add(a, b Tuple) Tuple {
 	return Tuple{
-		x: a.x + b.x,
-		y: a.y + b.y,
-		z: a.z + b.z,
+		X: a.X + b.X,
+		Y: a.Y + b.Y,
+		Z: a.Z + b.Z,
 		w: a.w + b.w,
 	}
 }
@@ -104,9 +90,9 @@ func (t1 Tuple) Add(t2 Tuple) Tuple {
 // Sub calculates the component-wise difference of two Tuples.
 func Sub(a, b Tuple) Tuple {
 	return Tuple{
-		x: a.x - b.x,
-		y: a.y - b.y,
-		z: a.z - b.z,
+		X: a.X - b.X,
+		Y: a.Y - b.Y,
+		Z: a.Z - b.Z,
 		w: a.w - b.w,
 	}
 }
@@ -124,9 +110,9 @@ func Neg(t Tuple) Tuple {
 // Mult calculates the component-wise product of a Tuple and a scalar.
 func Mult(t Tuple, scalar float64) Tuple {
 	return Tuple{
-		x: t.x * scalar,
-		y: t.y * scalar,
-		z: t.z * scalar,
+		X: t.X * scalar,
+		Y: t.Y * scalar,
+		Z: t.Z * scalar,
 		w: t.w * scalar,
 	}
 }
@@ -134,9 +120,9 @@ func Mult(t Tuple, scalar float64) Tuple {
 // Div calculates the component-wise quotient of a Tuple and a scalar.
 func Div(t Tuple, scalar float64) Tuple {
 	return Tuple{
-		x: t.x / scalar,
-		y: t.y / scalar,
-		z: t.z / scalar,
+		X: t.X / scalar,
+		Y: t.Y / scalar,
+		Z: t.Z / scalar,
 		w: t.w / scalar,
 	}
 }
@@ -145,9 +131,9 @@ func Div(t Tuple, scalar float64) Tuple {
 // undefined result.
 func Mag(vec Tuple) float64 {
 	return math.Sqrt(
-		math.Pow(vec.x, 2) +
-			math.Pow(vec.y, 2) +
-			math.Pow(vec.z, 2) +
+		math.Pow(vec.X, 2) +
+			math.Pow(vec.Y, 2) +
+			math.Pow(vec.Z, 2) +
 			math.Pow(vec.w, 2))
 }
 
@@ -160,9 +146,9 @@ func Norm(vec Tuple) Tuple {
 // Dot returns the dot-product of two vectors. Passing a point to Dot
 // is undefined.
 func Dot(a, b Tuple) float64 {
-	return a.x*b.x +
-		a.y*b.y +
-		a.z*b.z +
+	return a.X*b.X +
+		a.Y*b.Y +
+		a.Z*b.Z +
 		a.w*b.w
 }
 
@@ -170,9 +156,9 @@ func Dot(a, b Tuple) float64 {
 // is undefined.
 func Cross(a, b Tuple) Tuple {
 	return Vector(
-		a.y*b.z-a.z*b.y,
-		a.z*b.x-a.x*b.z,
-		a.x*b.y-a.y*b.x,
+		a.Y*b.Z-a.Z*b.Y,
+		a.Z*b.X-a.X*b.Z,
+		a.X*b.Y-a.Y*b.X,
 	)
 }
 
