@@ -6,7 +6,7 @@ import "github.com/noahssarcastic/gort/pkg/util"
 // A Color represents an RGB color with component values between [0,1].
 // The zero value for Color is black.
 type Color struct {
-	r, g, b float64
+	R, G, B float64
 }
 
 // New returns a new Color literal.
@@ -14,28 +14,19 @@ func New(r, g, b float64) Color {
 	return Color{r, g, b}
 }
 
-// Get the R component value of a Color.
-func (c Color) R() float64 { return c.r }
-
-// Get the G component value of a Color.
-func (c Color) G() float64 { return c.g }
-
-// Get the B component value of a Color.
-func (c Color) B() float64 { return c.b }
-
 // Equal returns true if the given Colors are equal.
 func Equal(c1, c2 Color) bool {
-	return util.FloatEqual(c1.r, c2.r) &&
-		util.FloatEqual(c1.g, c2.g) &&
-		util.FloatEqual(c1.b, c2.b)
+	return util.FloatEqual(c1.R, c2.R) &&
+		util.FloatEqual(c1.G, c2.G) &&
+		util.FloatEqual(c1.B, c2.B)
 }
 
 // Add returns the component-wise sum of two Colors.
 func Add(c1, c2 Color) Color {
 	return Color{
-		r: c1.r + c2.r,
-		g: c1.g + c2.g,
-		b: c1.b + c2.b,
+		R: c1.R + c2.R,
+		G: c1.G + c2.G,
+		B: c1.B + c2.B,
 	}
 }
 
@@ -47,9 +38,9 @@ func (c1 Color) Add(c2 Color) Color {
 // Sub returns the component-wise difference of two Colors.
 func Sub(c1, c2 Color) Color {
 	return Color{
-		r: c1.r - c2.r,
-		g: c1.g - c2.g,
-		b: c1.b - c2.b,
+		R: c1.R - c2.R,
+		G: c1.G - c2.G,
+		B: c1.B - c2.B,
 	}
 }
 
@@ -61,18 +52,18 @@ func (c1 Color) Sub(c2 Color) Color {
 // Mult scales each component of a Color c by the given scalar.
 func Mult(c Color, scalar float64) Color {
 	return Color{
-		r: c.r * scalar,
-		g: c.g * scalar,
-		b: c.b * scalar,
+		R: c.R * scalar,
+		G: c.G * scalar,
+		B: c.B * scalar,
 	}
 }
 
 // PiecewiseMult returns the component-wise product of two Colors.
 func PiecewiseMult(c1 Color, c2 Color) Color {
 	return Color{
-		r: c1.r * c2.r,
-		g: c1.g * c2.g,
-		b: c1.b * c2.b,
+		R: c1.R * c2.R,
+		G: c1.G * c2.G,
+		B: c1.B * c2.B,
 	}
 }
 
@@ -101,7 +92,7 @@ func clampValue(val float64) float64 {
 // Otherwise, the component is left unchanged.
 func Clamp(c Color) Color {
 	return Color{
-		clampValue(c.r),
-		clampValue(c.g),
-		clampValue(c.b)}
+		clampValue(c.R),
+		clampValue(c.G),
+		clampValue(c.B)}
 }

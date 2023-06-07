@@ -53,9 +53,9 @@ func ImageToPixelMap(img Image) *ppm.PixelMap {
 	for y := 0; y < h; y++ {
 		for x := 0; x < w; x++ {
 			c = color.Clamp(img.Get(x, y))
-			r, g, b := int(c.R()*ppm.MaxColor),
-				int(c.G()*ppm.MaxColor),
-				int(c.B()*ppm.MaxColor)
+			r, g, b := int(c.R*ppm.MaxColor),
+				int(c.G*ppm.MaxColor),
+				int(c.B*ppm.MaxColor)
 			pm.Set(x, y, r, g, b)
 		}
 	}
