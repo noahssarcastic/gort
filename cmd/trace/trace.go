@@ -11,12 +11,11 @@ import (
 	"github.com/noahssarcastic/gort/pkg/image"
 	"github.com/noahssarcastic/gort/pkg/light"
 	"github.com/noahssarcastic/gort/pkg/material"
+	"github.com/noahssarcastic/gort/pkg/matrix"
 	"github.com/noahssarcastic/gort/pkg/ppm"
 	"github.com/noahssarcastic/gort/pkg/ray"
 	"github.com/noahssarcastic/gort/pkg/tuple"
 )
-
-type Object = ray.Intersectable
 
 func main() {
 	initConfig()
@@ -40,10 +39,11 @@ func main() {
 	x0 := screenOrigin.X() - float64(w)/2 + cellCenterPadding
 	y0 := screenOrigin.Y() - float64(h)/2 + cellCenterPadding
 
-	sphere := geo.DefaultSphere()
-	sphere.SetMaterial(material.New(color.New(1, .2, 1), 0.1, 0.9, 0.9, 200))
-	objects := []Object{
-		sphere,
+	objects := []geo.Sphere{
+		geo.NewSphere(
+			matrix.I,
+			material.New(color.New(1, .2, 1), 0.1, 0.9, 0.9, 200),
+		),
 	}
 
 	ptLight := light.NewPointLight(color.White, tuple.Point(-10, 10, -10))
@@ -59,21 +59,21 @@ func main() {
 			rayDir := tuple.Sub(screenCellCenter, eye)
 			rayDir = tuple.Norm(rayDir)
 			r := ray.New(eye, rayDir)
-			xs := make([]ray.Intersect, 0)
-			for _, obj := range objects {
-				for _, x := range obj.Intersect(r) {
-					xs = ray.InsertIntersect(xs, x)
+			xs := make([]geo.Intersection, 0)
+			for _, sphere := range objects {
+				for _, x := range geo.Intersect(&sphere, r) {
+					xs = geo.InsertIntersection(xs, x)
 				}
 			}
-			hit, err := ray.Hit(xs)
-			if errors.Is(err, ray.ErrNoHits) {
+			hit, err := geo.Hit(xs)
+			if errors.Is(err, geo.ErrNoHits) {
 				img.Set(x, y, color.Black)
 			} else {
-				pt := ray.Position(r, hit.Distance())
-				normalVec := hit.Object().NormalAt(pt)
+				pt := ray.Position(r, hit.Distance)
+				normalVec := geo.NormalAt(hit.Sphere, pt)
 				eyeVec := tuple.Neg(r.Direction())
 				pixel := light.Lighting(
-					hit.Object().Material(),
+					hit.Sphere.Material,
 					pt,
 					ptLight,
 					eyeVec,

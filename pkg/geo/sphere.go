@@ -69,7 +69,6 @@ func search(xs []Intersection, new Intersection) int {
 	})
 }
 
-// TODO: test this better, might be broken
 func insertAt(xs []Intersection, i int, new Intersection) []Intersection {
 	if i == len(xs) {
 		return append(xs, new)
