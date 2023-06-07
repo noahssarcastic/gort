@@ -40,7 +40,7 @@ func main() {
 	x0 := screenOrigin.X() - float64(w)/2 + cellCenterPadding
 	y0 := screenOrigin.Y() - float64(h)/2 + cellCenterPadding
 
-	sphere := geo.NewSphere()
+	sphere := geo.DefaultSphere()
 	sphere.SetMaterial(material.New(color.New(1, .2, 1), 0.1, 0.9, 0.9, 200))
 	objects := []Object{
 		sphere,

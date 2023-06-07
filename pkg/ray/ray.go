@@ -1,3 +1,4 @@
+// Package ray implements Ray
 package ray
 
 import (

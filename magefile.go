@@ -75,7 +75,6 @@ func Smoke() error {
 		{"./cmd/ppm", "output/test.ppm"},
 		{"./cmd/clock", "output/clock.ppm"},
 		{"./cmd/projectile", "output/projectile.ppm"},
-		{"./cmd/scene", "output/scene.ppm"},
 	} {
 		err = goRun(t.cmd, t.output)
 		if err != nil {
