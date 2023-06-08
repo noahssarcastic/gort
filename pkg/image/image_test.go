@@ -27,8 +27,8 @@ func TestNew(t *testing.T) {
 	img := New(w, h)
 	for x := 0; x < w; x++ {
 		for y := 0; y < w; y++ {
-			if !color.Equal(img.Get(x, y), color.White) {
-				t.Errorf("pixel at %v,%v is not white", x, y)
+			if !color.Equal(img.Get(x, y), color.Black) {
+				t.Errorf("pixel at %v,%v is not black", x, y)
 			}
 		}
 	}
