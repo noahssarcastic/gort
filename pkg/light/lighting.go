@@ -14,18 +14,18 @@ func Lighting(
 	light *PointLight,
 	eyeVec, normalVec tuple.Tuple,
 ) color.Color {
-	effectiveColor := color.PiecewiseMult(mat.Color(), light.Intensity())
+	effectiveColor := color.PiecewiseMult(mat.Color, light.Intensity())
 	lightVec := tuple.Norm(light.Position().Sub(pt))
 	// initialize as black
 	var diffuse, specular, ambient color.Color
 	if cosLightNormal := tuple.Dot(lightVec, normalVec); cosLightNormal >= 0 {
-		diffuse = color.Mult(effectiveColor, mat.Diffuse()*cosLightNormal)
+		diffuse = color.Mult(effectiveColor, mat.Diffuse*cosLightNormal)
 		reflectVec := tuple.Reflect(tuple.Neg(lightVec), normalVec)
 		if cosReflectEye := tuple.Dot(reflectVec, eyeVec); cosReflectEye > 0 {
-			factor := math.Pow(cosReflectEye, mat.Shininess())
-			specular = color.Mult(light.Intensity(), mat.Specular()*factor)
+			factor := math.Pow(cosReflectEye, mat.Shininess)
+			specular = color.Mult(light.Intensity(), mat.Specular*factor)
 		}
 	}
-	ambient = color.Mult(effectiveColor, mat.Ambient())
+	ambient = color.Mult(effectiveColor, mat.Ambient)
 	return diffuse.Add(specular).Add(ambient)
 }
